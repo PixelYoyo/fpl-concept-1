@@ -1,0 +1,198 @@
+/* ===== Version 2 only ===== */
+
+/* Hero — scroll expand.
+   The section is taller than the viewport; its stage sticks under the nav
+   and fills the rest of the viewport while the video card grows from a
+   centred rounded card to full bleed. version-2.js drives the geometry. */
+.xhero {
+  --nav-h: 61px;
+  --stage-h: calc(100vh - var(--nav-h));
+  position: relative;
+  height: calc(var(--stage-h) * 2.2);
+  background: var(--ink);
+}
+@supports (height: 100svh) {
+  .xhero { --stage-h: calc(100svh - var(--nav-h)); }
+}
+.xhero__stage {
+  position: sticky; top: var(--nav-h);
+  height: var(--stage-h);
+  overflow: hidden; color: var(--white);
+}
+
+.xhero__media {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+  overflow: hidden; border-radius: 0;
+  will-change: left, top, width, height;
+}
+.xhero__media video { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; display: block; }
+.xhero__shade {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 97%);
+}
+
+.xhero__content {
+  position: absolute; left: 0; right: 0; bottom: 0; margin-inline: auto;
+  padding-bottom: 64px;
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+  text-align: center; pointer-events: none;
+}
+.xhero__head { width: 100%; display: flex; flex-direction: column; align-items: center; will-change: transform; }
+.xhero__overline, .xhero__title { will-change: transform; }
+.xhero__title {
+  max-width: 800px;
+  font-size: 64px; line-height: 70px; font-weight: 600; letter-spacing: -0.96px;
+  transform-origin: 50% 100%;
+}
+.xhero__body { max-width: 800px; font-size: 18px; line-height: 26px; will-change: opacity, transform; }
+
+@media (max-width: 767px) {
+  .xhero { --nav-h: 63px; }
+  .xhero__content { padding-bottom: 40px; gap: 16px; }
+  .xhero__head { gap: 4px; }
+  .xhero__title { font-size: 40px; line-height: 48px; letter-spacing: -0.4px; }
+}
+
+/* No scrubbing: show the expanded hero at viewport height. */
+@media (prefers-reduced-motion: reduce) {
+  .xhero { height: var(--stage-h); }
+}
+
+/* "I'm looking for" — photo band with a curved stone panel.
+   The photo covers the whole section; the panel sits on top, its curved
+   edge (Figma shape) cut out of the right side on desktop, the bottom on mobile. */
+.lf {
+  position: relative; display: flex; align-items: stretch; min-height: 458px;
+  background: var(--white) url("img/looking-for.jpg") center / cover no-repeat;
+}
+.lf__panel {
+  position: relative; flex: 0 0 calc(var(--gutter) + 427px);
+  display: flex; flex-direction: column; justify-content: center; gap: 20px;
+  padding: 24px 64px 32px var(--gutter);
+}
+.lf__shape { position: absolute; inset: 0; pointer-events: none; }
+.lf__shape > div, .lf__shape img { width: 100%; height: 100%; }
+.lf__title { position: relative; font-size: 24px; line-height: 32px; font-weight: 500; letter-spacing: -0.48px; }
+.lf__links { position: relative; display: flex; flex-direction: column; gap: 20px; }
+.lf__link {
+  position: relative; display: flex; align-items: center; gap: 8px; padding-block: 17px 1px;
+  font-size: 16px; line-height: 22px; font-weight: 600; color: var(--black);
+}
+.lf__label { flex: 1; text-transform: uppercase; padding-right: 4px; }
+.lf__link .icon { flex: none; margin-left: 4px; transition: transform var(--t-fast) var(--ease); }
+.lf__link::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--ink);
+  transform: scaleX(0); transform-origin: left; transition: transform var(--t-slow) var(--ease);
+}
+.lf__link:hover::before, .lf__link:focus-visible::before { transform: scaleX(1); }
+.lf__link:hover .icon, .lf__link:focus-visible .icon { transform: translateX(4px); }
+.lf__media { flex: 1; }
+
+@media (max-width: 767px) {
+  .lf { flex-direction: column; min-height: 0; }
+  .lf__panel { flex: none; gap: 32px; padding: 24px 20px 32px; }
+  .lf__title { font-size: 20px; line-height: 28px; }
+  /* Figma rotates the same vertical shape 90° so the curve sits on the bottom edge. */
+  .lf__shape { display: flex; align-items: center; justify-content: center; container-type: size; }
+  .lf__shape > div { flex: none; width: 100cqh; height: 100cqw; transform: rotate(90deg); }
+  .lf__media { flex: none; height: 320px; }
+}
+
+/* Footer (Figma "Footer" 151:1091) — plum band with swoosh, CTA, dark link
+   panel, oversized dark wordmark and legal row. Columns become an accordion
+   on mobile (version-2.js). */
+.ft { position: relative; background: var(--plum); color: var(--white); border-radius: 32px 32px 0 0; overflow: hidden; }
+.ft__swoosh {
+  position: absolute; left: 50%; top: 159px; width: 2163.86px; height: 1217.92px; max-width: none;
+  transform: translate(-50%, -50%) rotate(21.67deg); pointer-events: none;
+}
+.ft__cta {
+  position: relative; max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; gap: 48px; padding: 64px 80px 32px;
+}
+.ft__cta-text { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.ft__cta-title { font-family: Arial, sans-serif; font-size: 32px; line-height: 40px; letter-spacing: -0.64px; }
+.ft__cta-body { font-size: 18px; line-height: 24px; }
+
+.ft__body {
+  position: relative; max-width: var(--maxw); margin: 0 auto; padding: 20px 20px 24px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.ft__panel {
+  width: 100%; background: var(--ink); border-radius: 32px; padding: 40px 32px;
+  display: flex; flex-direction: column; gap: 40px; margin-bottom: -4px; position: relative; z-index: 1;
+}
+.ft__top { display: flex; gap: 20px; padding-bottom: 48px; }
+.ft__group { flex: 1; font-family: Arial, sans-serif; font-size: 28px; line-height: 36px; letter-spacing: -0.56px; }
+.ft__cols { flex: 1; min-width: 0; display: flex; gap: 32px; }
+.ft__col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.ft__trigger {
+  display: flex; width: 100%; align-items: center; justify-content: space-between; text-align: left;
+  font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  pointer-events: none; /* plain heading on desktop */
+}
+.ft__chev { display: none; transition: transform var(--t) var(--ease); }
+.ft__links { display: grid; grid-template-rows: 1fr; }
+.ft__links > div { overflow: hidden; display: flex; flex-direction: column; gap: 12px; }
+.ft__links a { font-size: 14px; line-height: normal; transition: opacity var(--t-fast) var(--ease); }
+.ft__links a:hover { opacity: 0.7; }
+
+.ft__bar { border-top: 1px solid rgba(255,255,255,0.4); padding-top: 24px; display: flex; justify-content: space-between; align-items: flex-start; }
+.ft__social, .ft__bu { display: flex; flex-direction: column; gap: 8px; }
+.ft__bu { align-items: flex-end; }
+.ft__icons { display: flex; gap: 8px; }
+.ft__icons a { width: 32px; height: 32px; display: grid; place-items: center; transition: opacity var(--t-fast) var(--ease); }
+.ft__icons a:hover { opacity: 0.7; }
+.ft__select { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; line-height: 20px; font-weight: 500; }
+
+.ft__wordmark { display: block; width: 953px; max-width: 100%; height: auto; }
+
+.ft__legal {
+  position: relative; max-width: var(--maxw); margin: 0 auto; padding: 20px;
+  display: flex; justify-content: space-between; align-items: center; font-size: 12px; line-height: normal;
+}
+.ft__legal-l, .ft__legal-r { display: flex; gap: 16px; }
+.ft__legal a:hover { text-decoration: underline; }
+
+@media (max-width: 1023px) {
+  .ft__cta { padding-inline: var(--gutter); }
+  .ft__top { flex-direction: column; gap: 32px; }
+}
+
+@media (max-width: 767px) {
+  .ft { border-radius: 24px 24px 0 0; }
+  .ft__swoosh { left: calc(50% + 75.5px); top: 94px; width: 860.97px; height: 484.59px; }
+  .ft__cta { flex-direction: column; align-items: stretch; gap: 40px; padding: 24px 16px 32px; }
+  .ft__cta-text { gap: 16px; }
+  .ft__cta-title { font-family: var(--font); font-size: 24px; line-height: 32px; letter-spacing: -0.12px; }
+  .ft__cta-body { font-size: 16px; line-height: 22px; }
+  .ft__cta-btn { width: 100%; justify-content: center; }
+
+  .ft__body { padding: 0 16px; }
+  .ft__panel { border-radius: 24px; padding: 20px 16px 32px; gap: 32px; margin-bottom: -2px; }
+  .ft__top { gap: 32px; padding-bottom: 0; }
+  .ft__group { font-family: var(--font); font-size: 20px; line-height: 24px; font-weight: 500; letter-spacing: -0.1px; }
+  .ft__cols { flex-direction: column; gap: 0; border-top: 1px solid rgba(255,255,255,0.2); }
+  .ft__col { gap: 0; border-bottom: 1px solid rgba(255,255,255,0.2); }
+  .ft__trigger {
+    pointer-events: auto; cursor: pointer; padding: 6px 0;
+    font-size: 16px; line-height: 22px; letter-spacing: 0; text-transform: none;
+  }
+  .ft__chev { display: block; width: 16px; height: 16px; margin: 14px; margin-right: 14px; }
+  .ft__col.is-open .ft__chev { transform: rotate(180deg); }
+  .ft__links { grid-template-rows: 0fr; transition: grid-template-rows var(--t) var(--ease); }
+  .ft__col.is-open .ft__links { grid-template-rows: 1fr; }
+  .ft__links > div { gap: 0; }
+  .ft__links a { font-size: 16px; line-height: 22px; padding: 11px 0; }
+  .ft__links > div > a:last-child { margin-bottom: 12px; }
+
+  .ft__bar { border-top: 0; padding-top: 0; flex-direction: column; gap: 32px; }
+  .ft__bu { align-items: flex-start; }
+
+  .ft__wordmark { width: 326.5px; }
+  .ft__legal {
+    flex-wrap: wrap; justify-content: center; gap: 8px 16px; padding: 34px 16px 32px;
+    line-height: 16px; text-align: center;
+  }
+  .ft__legal-l, .ft__legal-r { display: contents; }
+}
