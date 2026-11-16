@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Frasers Property Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Icon sprite (light-weight line icons, matching Font Awesome Light) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M3.5 12h17M14 5.5l6.5 6.5-6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M20.5 12h-17M10 5.5L3.5 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20.5v-17M5.5 10L12 3.5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M4 12h16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M15.5 15.5l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path fill="currentColor" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4H7.1V12h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9V12h3.4l-.5 3.5h-2.9v8.4A12 12 0 0 0 24 12z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M5.4 22H1.3V8.7h4.1V22zM3.3 6.9A2.4 2.4 0 1 1 3.3 2a2.4 2.4 0 0 1 0 4.9zM22.7 22h-4.1v-6.5c0-1.5 0-3.5-2.2-3.5s-2.5 1.7-2.5 3.4V22H9.8V8.7h3.9v1.8h.1c.5-1 1.9-2.2 3.9-2.2 4.2 0 5 2.8 5 6.4V22z"/></symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.4-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></symbol>
+</svg>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <div class="nav__left">
+      <a href="index.html" class="nav__logo" aria-label="Design concepts home"><img src="img/logo.svg" alt="Frasers Property" width="96" height="37"></a>
+      <a href="version-1.html" class="nav__link is-current" aria-current="page">Version 1</a>
+      <a href="version-2.html" class="nav__link">Version 2</a>
+    </div>
+    <div class="nav__right">
+      <button class="icon-btn" aria-label="Search"><svg class="icon icon--20"><use href="#i-search"/></svg></button>
+      <a href="#" class="btn btn--primary btn--sm">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero__media" aria-hidden="true">
+    <img src="img/hero.jpg" alt="">
+  </div>
+  <div class="hero__content wrap">
+    <p class="overline reveal">Frasers Property Group</p>
+    <h1 class="hero__title reveal">Inspiring experiences,<br>creating places for good.</h1>
+    <p class="hero__body reveal">Frasers Property is a multinational real estate investor, developer and operator, creating homes, workplaces, retail, industrial and hospitality places across 20 countries.</p>
+  </div>
+</section>
+
+<!-- ============ LATEST FROM FRASERS (timed news carousel) ============ -->
+<section class="latest" data-carousel="latest" aria-roledescription="carousel" aria-label="Latest from Frasers Property">
+  <div class="latest__grid wrap">
+    <div class="latest__left">
+      <h2 class="latest__title">Latest from<br class="d-only"> Frasers Property</h2>
+      <div class="controls controls--light d-only-flex">
+        <div class="dots" data-dots></div>
+        <div class="arrows">
+          <button class="arrow" data-prev aria-label="Previous"><svg class="icon"><use href="#i-arrow-left"/></svg></button>
+          <button class="arrow" data-next aria-label="Next"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="latest__right">
+      <div class="latest__stage" aria-live="polite">
+        <div class="latest__slide is-active">
+          <p class="latest__text">Frasers Property appoints Jai Mirpuri as Chief Executive Officer of its industrial and logistics business.</p>
+          <a href="#" class="text-link">Read the announcement <svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <div class="latest__slide">
+          <p class="latest__text">Frasers Property and Mitsubishi Estate to jointly redevelop Valley Point and Fraser Suites Singapore into a riverfront destination.</p>
+          <a href="#" class="text-link">Read the announcement <svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <div class="latest__slide">
+          <p class="latest__text">Frasers Property reports FY25 results, with recurring income making up more than 70% of profit before interest and tax.</p>
+          <a href="#" class="text-link">View the results <svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <div class="latest__slide">
+          <p class="latest__text">Frasers Hospitality announces a planned leadership transition as it enters its next phase of growth.</p>
+          <a href="#" class="text-link">Read the announcement <svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="controls controls--light m-only-flex">
+      <div class="dots" data-dots></div>
+      <div class="arrows">
+        <button class="arrow" data-prev aria-label="Previous"><svg class="icon"><use href="#i-arrow-left"/></svg></button>
+        <button class="arrow" data-next aria-label="Next"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ I'M LOOKING FOR ============ -->
+<section class="quick wrap">
+  <p class="overline reveal">I’m looking for</p>
+  <div class="quick__grid">
+    <a href="#" class="quick__link reveal"><span>01 —</span><span class="quick__label">Our development pipeline</span><svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></a>
+    <a href="#" class="quick__link reveal"><span>02 —</span><span class="quick__label">Sustainability goals and progress</span><svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></a>
+    <a href="#" class="quick__link reveal"><span>03 —</span><span class="quick__label">Annual reports and results</span><svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></a>
+    <a href="#" class="quick__link reveal"><span>04 —</span><span class="quick__label">Our leadership team</span><svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></a>
+  </div>
+</section>
+
+<!-- ============ OUR BUSINESSES ============ -->
+<section class="biz section" data-scroller="biz">
+  <div class="wrap section-head reveal">
+    <div class="section-head__text">
+      <p class="overline overline--lg">Our businesses</p>
+      <h2 class="h-xl">Five asset classes, one integrated real estate group</h2>
+    </div>
+    <a href="#" class="btn btn--outline d-only-flex">Explore our businesses</a>
+  </div>
+
+  <div class="biz__track" data-track>
+    <a href="#" class="biz-card">
+      <img src="img/card-1.jpg" alt="" loading="lazy">
+      <div class="biz-card__content">
+        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
+        <h3 class="biz-card__title">Develop</h3>
+        <div class="biz-card__more"><div>
+          <p>We design and build properties to suit any industrial, logistics and commercial need.</p>
+          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
+        </div></div>
+      </div>
+    </a>
+    <a href="#" class="biz-card">
+      <img src="img/card-1.jpg" alt="" loading="lazy">
+      <div class="biz-card__content">
+        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
+        <h3 class="biz-card__title">Integrated</h3>
+        <div class="biz-card__more"><div>
+          <p>Mixed-use precincts that bring homes, workplaces and retail together.</p>
+          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
+        </div></div>
+      </div>
+    </a>
+    <a href="#" class="biz-card">
+      <img src="img/card-2.jpg" alt="" loading="lazy">
+      <div class="biz-card__content">
+        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
+        <h3 class="biz-card__title">Hospitality</h3>
+        <div class="biz-card__more"><div>
+          <p>Serviced residences and hotels across more than 70 cities worldwide.</p>
+          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
+        </div></div>
+      </div>
+    </a>
+    <a href="#" class="biz-card">
+      <img src="img/card-3.jpg" alt="" loading="lazy">
+      <div class="biz-card__content">
+        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
+        <h3 class="biz-card__title">Commercial and business parks</h3>
+        <div class="biz-card__more"><div>
+          <p>Offices and business parks built for the way modern teams work.</p>
+          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
+        </div></div>
+      </div>
+    </a>
+    <a href="#" class="biz-card">
+      <img src="img/investor.jpg" alt="" loading="lazy">
+      <div class="biz-card__content">
+        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
+        <h3 class="biz-card__title">Industrial and logistics</h3>
+        <div class="biz-card__more"><div>
+          <p>Logistics and light industrial facilities across Asia, Australia and Europe.</p>
+          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
+        </div></div>
+      </div>
+    </a>
+  </div>
+
+  <div class="wrap controls">
+    <div class="dots dots--dark" data-dots></div>
+    <div class="arrows">
+      <button class="arrow" data-prev aria-label="Previous"><svg class="icon"><use href="#i-arrow-left"/></svg></button>
+      <button class="arrow" data-next aria-label="Next"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
+    </div>
+  </div>
+  <div class="wrap m-only"><a href="#" class="btn btn--outline btn--block">Explore our businesses</a></div>
+</section>
+
+<!-- ============ WHERE WE OPERATE ============ -->
+<section class="ops section" id="ops">
+  <div class="wrap ops__grid">
+    <div class="ops__left">
+      <div class="reveal">
+        <p class="overline overline--lg">Our global reach</p>
+        <h2 class="h-xl">Where we operate</h2>
+      </div>
+      <div class="chips" role="tablist" aria-label="Region">
+        <button class="chip is-selected" role="tab" aria-selected="true" data-region="apac">APAC (9)</button>
+        <button class="chip" role="tab" aria-selected="false" data-region="eama">EAMA (4)</button>
+      </div>
+      <ul class="ops__list" data-country-list></ul>
+      <div class="ops__accordion" data-accordion></div>
+    </div>
+
+    <div class="ops__stage" data-stage>
+      <img class="ops__map" src="img/map-dots.svg" alt="" aria-hidden="true">
+      <div class="ops__markers" data-markers></div>
+      <div class="country-card" data-popup role="dialog" aria-modal="false" aria-hidden="true" tabindex="-1">
+        <div class="country-card__inner" data-popup-inner></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INVESTORS ============ -->
+<section class="investors section wrap">
+  <div class="section-head reveal">
+    <div class="section-head__text">
+      <p class="overline overline--lg">Investors</p>
+      <h2 class="h-xl">Share price and investor information</h2>
+    </div>
+    <a href="#" class="btn btn--outline d-only-flex">Visit investor relations</a>
+  </div>
+  <div class="investors__grid">
+    <div class="stat-card reveal">
+      <p>Frasers Property Limited (TQ5)</p>
+      <div>
+        <div class="stat-card__price">
+          <span class="stat-card__cur">S$</span>
+          <span class="stat-card__num">0.880</span>
+          <svg class="icon icon--32"><use href="#i-arrow-up"/></svg>
+        </div>
+        <p class="stat-card__date">As of 03 Nov 2026 17:04</p>
+      </div>
+    </div>
+    <div class="facts reveal">
+      <div><span>Last done</span><strong>S$0.880</strong></div>
+      <div><span>Change</span><strong>-0.015 (-1.7)</strong></div>
+      <div><span>Volume ('000)</span><strong>134.1</strong></div>
+    </div>
+    <div class="investors__img reveal"><img src="img/investor.jpg" alt="Frasers Property logistics facility" loading="lazy"></div>
+  </div>
+  <a href="#" class="btn btn--outline btn--block m-only">Visit investor relations</a>
+</section>
+
+<!-- ============ FEATURED PROPERTIES (timed carousel) ============ -->
+<section class="featured section" data-carousel="featured" aria-roledescription="carousel" aria-label="Featured properties">
+  <div class="featured__swoosh" aria-hidden="true"><img src="img/swoosh.svg" alt=""></div>
+  <div class="wrap featured__head reveal">
+    <p class="overline overline--lg">Portfolio highlights</p>
+    <h2 class="h-xl">Featured properties</h2>
+  </div>
+  <div class="wrap controls featured__controls">
+    <div class="dots dots--dark" data-dots></div>
+    <div class="arrows">
+      <button class="arrow" data-prev aria-label="Previous"><svg class="icon"><use href="#i-arrow-left"/></svg></button>
+      <button class="arrow" data-next aria-label="Next"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="featured__viewport">
+      <div class="featured__track" data-track>
+        <a href="#" class="feat-card is-active">
+          <div class="feat-card__img"><img src="img/property-1.jpg" alt=""><span class="tag tag--light">Hospitality</span></div>
+          <div class="feat-card__text">
+            <h3>Fraser Place Wujiaochang, Shanghai</h3>
+            <p>Serviced residences in Shanghai’s Wujiaochang business district.</p>
+          </div>
+        </a>
+        <a href="#" class="feat-card">
+          <div class="feat-card__img"><img src="img/property-2.jpg" alt=""><span class="tag tag--light">Commercial</span></div>
+          <div class="feat-card__text">
+            <h3>One Bangkok, Thailand</h3>
+            <p>A landmark integrated district in the heart of Bangkok.</p>
+          </div>
+        </a>
+        <a href="#" class="feat-card">
+          <div class="feat-card__img"><img src="img/insight-2.jpg" alt=""><span class="tag tag--light">Retail</span></div>
+          <div class="feat-card__text">
+            <h3>Northpoint City, Singapore</h3>
+            <p>The largest mall in Singapore’s north, connected to transit and homes.</p>
+          </div>
+        </a>
+        <a href="#" class="feat-card">
+          <div class="feat-card__img"><img src="img/insight-3.jpg" alt=""><span class="tag tag--light">Industrial</span></div>
+          <div class="feat-card__text">
+            <h3>Frasers Logistics Park, Germany</h3>
+            <p>Sustainable logistics facilities serving Europe’s key trade corridors.</p>
+          </div>
+        </a>
+        <a href="#" class="feat-card">
+          <div class="feat-card__img"><img src="img/insight-1.jpg" alt=""><span class="tag tag--light">Residential</span></div>
+          <div class="feat-card__text">
+            <h3>Waterway Point, Punggol</h3>
+            <p>Waterfront living and retail designed around community.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SUSTAINABILITY ============ -->
+<section class="sus-wrap">
+  <div class="sus">
+    <div class="sus__text reveal">
+      <p class="overline overline--lg">Sustainability</p>
+      <h2 class="h-xl">Net-zero carbon by 2050</h2>
+      <p class="sus__body">We’re cutting emissions across our properties and value chain, adding renewable energy and green-certifying our portfolio. Progress as at 30 September 2025.</p>
+      <a href="#" class="btn btn--outline-light d-only-flex">Download the FY25 ESG report</a>
+    </div>
+    <div class="sus__media reveal">
+      <img src="img/sustainability.jpg" alt="Green facade with vertical gardens" loading="lazy">
+      <div class="sus__facets">
+        <div class="facet"><strong>&gt;76 MW</strong><span>of 215 MW by 2030</span></div>
+        <div class="facet"><strong>&gt;60%</strong><span>green-certified, target 85%</span></div>
+        <div class="facet"><strong>15</strong><span>GRESB sector leadership positions (2025)</span></div>
+      </div>
+    </div>
+    <a href="#" class="btn btn--outline-light btn--block m-only">Download the FY25 ESG report</a>
+  </div>
+</section>
+
+<!-- ============ NEWSROOM ============ -->
+<section class="news section wrap">
+  <div class="section-head reveal">
+    <div class="section-head__text">
+      <p class="overline overline--lg">Newsroom</p>
+      <h2 class="h-xl">Latest news from Frasers Property</h2>
+    </div>
+    <a href="#" class="btn btn--outline">View all press releases</a>
+  </div>
+  <div class="news__grid">
+    <a href="#" class="news-card reveal">
+      <div class="news-card__img"><img src="img/news-1.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+      <h3>Frasers Property appoints Jai Mirpuri as Chief Executive Officer of its industrial and logistics business</h3>
+      <p class="news-card__date">13 Oct 2026</p>
+    </a>
+    <a href="#" class="news-card reveal">
+      <div class="news-card__img"><img src="img/news-2.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+      <h3>Frasers Property announces planned leadership transition for Frasers Hospitality</h3>
+      <p class="news-card__date">09 Oct 2026</p>
+    </a>
+    <a href="#" class="news-card reveal">
+      <div class="news-card__img"><img src="img/news-3.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+      <h3>Frasers Property and Mitsubishi Estate to jointly redevelop Valley Point and Fraser Suites Singapore into landmark 999-year mixed-use riverfront destination</h3>
+      <p class="news-card__date">13 Oct 2026</p>
+    </a>
+  </div>
+</section>
+
+<!-- ============ INSIGHTS ============ -->
+<section class="news news--insights section wrap">
+  <div class="section-head reveal">
+    <div class="section-head__text">
+      <p class="overline overline--lg">Insights</p>
+      <h2 class="h-xl">Perspectives on cities, communities and real estate</h2>
+    </div>
+    <a href="#" class="btn btn--outline d-only-flex">View all insights</a>
+  </div>
+  <div class="news__grid">
+    <a href="#" class="news-card reveal">
+      <div class="news-card__img"><img src="img/insight-1.jpg" alt="" loading="lazy"><span class="tag tag--dark">Insight</span></div>
+      <h3>Beyond zero-sum: How real estate and public policy can co-create future cities</h3>
+      <p class="news-card__date">7 Oct 2026</p>
+    </a>
+    <a href="#" class="news-card reveal">
+      <div class="news-card__img"><img src="img/insight-2.jpg" alt="" loading="lazy"><span class="tag tag--dark">Insight</span></div>
+      <h3>The power of listening: How we create value by understanding people’s needs</h3>
+      <p class="news-card__date">25 Aug 2026</p>
+    </a>
+    <a href="#" class="news-card reveal">
+      <div class="news-card__img"><img src="img/insight-3.jpg" alt="" loading="lazy"><span class="tag tag--dark">Insight</span></div>
+      <h3>Being adaptable and resilient: here's how we future-proof Europe’s industrial infrastructure</h3>
+      <p class="news-card__date">25 Aug 2026</p>
+    </a>
+  </div>
+  <a href="#" class="btn btn--outline btn--block m-only">View all insights</a>
+</section>
+
+<!-- ============ LARGE LINKS ============ -->
+<section class="biglinks wrap">
+  <a href="#" class="biglink reveal"><span>Work with us</span><svg class="icon icon--40"><use href="#i-arrow-right"/></svg></a>
+  <a href="#" class="biglink reveal"><span>About our group</span><svg class="icon icon--40"><use href="#i-arrow-right"/></svg></a>
+  <a href="#" class="biglink reveal"><span>Sustainability</span><svg class="icon icon--40"><use href="#i-arrow-right"/></svg></a>
+</section>
+
+</main>
+
+<!-- ============ CTA + FOOTER ============ -->
+<footer class="foot">
+  <img class="foot__swoosh" src="img/footer-swoosh.svg" alt="" aria-hidden="true">
+  <div class="cta wrap">
+    <div class="cta__text">
+      <p class="cta__title">Have a question?</p>
+      <p class="cta__body">Talk to our team about leasing, investment or a project near you.</p>
+    </div>
+    <a href="#" class="btn btn--white">Contact us</a>
+  </div>
+
+  <div class="foot__body">
+    <div class="foot__panel">
+      <div class="foot__top">
+        <p class="foot__group">Frasers Property Group</p>
+        <div class="foot__cols">
+          <details class="foot__col" open>
+            <summary class="overline">Who we are <svg class="icon icon--12 m-only"><use href="#i-chevron-down"/></svg></summary>
+            <div class="foot__links"><div>
+              <a href="#">About our group</a><a href="#">Board &amp; management</a><a href="#">Our history</a><a href="#">Achievements</a>
+            </div></div>
+          </details>
+          <details class="foot__col" open>
+            <summary class="overline">Invest with us <svg class="icon icon--12 m-only"><use href="#i-chevron-down"/></svg></summary>
+            <div class="foot__links"><div>
+              <a href="#">Investor relations</a><a href="#">Publications</a><a href="#">Our REITs</a>
+            </div></div>
+          </details>
+          <details class="foot__col" open>
+            <summary class="overline">Sustainability <svg class="icon icon--12 m-only"><use href="#i-chevron-down"/></svg></summary>
+            <div class="foot__links"><div>
+              <a href="#">Our approach</a><a href="#">ESG reports &amp; disclosures</a><a href="#">ESG framework &amp; policies</a>
+            </div></div>
+          </details>
+          <details class="foot__col" open>
+            <summary class="overline">News &amp; careers <svg class="icon icon--12 m-only"><use href="#i-chevron-down"/></svg></summary>
+            <div class="foot__links"><div>
+              <a href="#">Media centre</a><a href="#">Careers</a><a href="#">Contact us</a>
+            </div></div>
+          </details>
+        </div>
+      </div>
+
+      <div class="foot__logo d-only"><img src="img/logo-white.svg" alt="Frasers Property" width="400" height="155"></div>
+
+      <div class="foot__bar">
+        <div class="foot__social">
+          <p class="overline">Follow us on socials</p>
+          <div class="foot__icons">
+            <a href="#" aria-label="Facebook"><svg class="icon icon--20"><use href="#i-facebook"/></svg></a>
+            <a href="#" aria-label="Instagram"><svg class="icon icon--20"><use href="#i-instagram"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg class="icon icon--20"><use href="#i-linkedin"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg class="icon icon--20"><use href="#i-youtube"/></svg></a>
+          </div>
+        </div>
+        <div class="foot__bu">
+          <p class="overline">Change market or business</p>
+          <button class="foot__select">Corporate <svg class="icon icon--12"><use href="#i-chevron-down"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot__legal">
+      <div class="foot__logo m-only"><img src="img/logo-white.svg" alt="Frasers Property" width="160" height="62"></div>
+      <div class="foot__legal-l"><span>© 2026 Frasers Property Limited</span><a href="#">Sitemap</a></div>
+      <div class="foot__legal-r"><a href="#">Privacy policy</a><a href="#">Terms of use</a><a href="#">Cookies</a><a href="#">Accessibility</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

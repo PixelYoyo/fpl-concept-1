@@ -1,0 +1,43 @@
+/* ===== Splash / landing page (Figma "Intro screen" 153:1212) ===== */
+.splash {
+  min-height: calc(100vh - 61px);
+  display: flex; align-items: center;
+  background: var(--white);
+}
+@supports (height: 100svh) { .splash { min-height: calc(100svh - 61px); } }
+.splash__inner {
+  width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 64px var(--gutter);
+  display: flex; flex-direction: column; gap: 40px;
+}
+.splash__intro { display: flex; flex-direction: column; gap: 24px; }
+.splash__title { max-width: 800px; font-size: 64px; line-height: 70px; font-weight: 600; letter-spacing: -0.96px; }
+.splash__body { max-width: 800px; font-size: 18px; line-height: 24px; }
+.splash__body a { color: var(--red-dark); text-decoration: underline; }
+.splash__body a:hover { text-decoration-thickness: 2px; }
+
+.splash__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.concept {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+  background: var(--stone); border-radius: 24px; padding: 32px 32px 40px;
+  transition: background-color var(--t-fast) var(--ease);
+}
+.concept__text { flex: 1; display: flex; flex-direction: column; gap: 12px; padding-bottom: 24px; }
+.concept__head { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.concept__title { font-size: 24px; line-height: 30px; font-weight: 500; letter-spacing: -0.12px; }
+.concept__desc { font-size: 14px; line-height: 20px; }
+/* Whole card is clickable via the button's stretched hit area. */
+.concept__btn::after { content: ""; position: absolute; inset: 0; border-radius: 24px; }
+.concept:hover { background: #eeedeb; }
+.concept:hover .concept__btn { background: var(--ink); color: var(--white); }
+
+@media (max-width: 767px) {
+  .splash { min-height: 0; align-items: flex-start; }
+  .splash__inner { padding: 48px 24px; gap: 32px; }
+  .splash__intro { gap: 16px; }
+  .splash__heading { display: flex; flex-direction: column; gap: 8px; }
+  .splash__title { font-size: 40px; line-height: 48px; font-weight: 700; letter-spacing: -0.4px; }
+  .splash__cards { grid-template-columns: 1fr; gap: 20px; }
+  .concept { padding: 24px 24px 32px; }
+  .concept__head { flex-direction: row-reverse; justify-content: space-between; align-items: flex-start; width: 100%; }
+  .concept__btn { width: 100%; }
+}
