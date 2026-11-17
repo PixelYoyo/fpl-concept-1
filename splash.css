@@ -41,3 +41,6 @@
   .concept__head { flex-direction: row-reverse; justify-content: space-between; align-items: flex-start; width: 100%; }
   .concept__btn { width: 100%; }
 }
+
+.splash__disclaimer { max-width: 800px; margin-top: -16px; font-size: 12px; line-height: 16px; color: rgba(0,0,0,0.6); }
+@media (max-width: 767px) { .splash__disclaimer { margin-top: -8px; } }
