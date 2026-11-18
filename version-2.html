@@ -134,9 +134,9 @@
       <img src="img/card-1.jpg" alt="" loading="lazy">
       <div class="biz-card__content">
         <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
-        <h3 class="biz-card__title">Develop</h3>
+        <h3 class="biz-card__title">Residential</h3>
         <div class="biz-card__more"><div>
-          <p>We design and build properties to suit any industrial, logistics and commercial need.</p>
+          <p>Homes and communities designed for the way people live, from apartments to master-planned estates.</p>
           <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
         </div></div>
       </div>
@@ -181,6 +181,17 @@
         <h3 class="biz-card__title">Industrial and logistics</h3>
         <div class="biz-card__more"><div>
           <p>Logistics and light industrial facilities across Asia, Australia and Europe.</p>
+          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
+        </div></div>
+      </div>
+    </a>
+    <a href="#" class="biz-card">
+      <img src="img/card-retail.jpg" alt="" loading="lazy">
+      <div class="biz-card__content">
+        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
+        <h3 class="biz-card__title">Retail</h3>
+        <div class="biz-card__more"><div>
+          <p>Suburban malls and community hubs at the heart of everyday neighbourhood life.</p>
           <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
         </div></div>
       </div>
@@ -333,30 +344,74 @@
 </section>
 
 <!-- ============ NEWSROOM ============ -->
-<section class="news section wrap">
-  <div class="section-head reveal">
-    <div class="section-head__text">
-      <p class="overline overline--lg">Newsroom</p>
-      <h2 class="h-xl">Latest news from Frasers Property</h2>
+<section class="nr" data-newsroom aria-labelledby="nr-title">
+  <div class="nr__stage">
+    <div class="nr__inner wrap">
+      <div class="nr__intro">
+        <div class="nr__head">
+          <h2 class="h-xl" id="nr-title">Newsroom</h2>
+          <a href="#" class="btn btn--outline d-only-flex">See all news</a>
+        </div>
+        <p class="nr__lede">Results, investments, leadership news and new places — the latest from Frasers Property across the cities and communities we shape.</p>
+        <div class="nr__chips" role="group" aria-label="Filter news by topic">
+          <button class="chip is-selected" aria-pressed="true" data-filter="all">All</button>
+          <button class="chip" aria-pressed="false" data-filter="corporate">Corporate</button>
+          <button class="chip" aria-pressed="false" data-filter="investments">Investments</button>
+          <button class="chip" aria-pressed="false" data-filter="people">People</button>
+          <button class="chip" aria-pressed="false" data-filter="sustainability">Sustainability</button>
+          <button class="chip" aria-pressed="false" data-filter="hospitality">Hospitality</button>
+          <button class="chip" aria-pressed="false" data-filter="community">Community</button>
+        </div>
+      </div>
+      <div class="nr__viewport">
+        <ul class="nr__grid" data-grid>
+          <li class="nr-card" data-cat="corporate"><a href="#" class="nr-card__link">
+            <div class="nr-card__img"><img src="img/nr-1.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+            <h3 class="nr-card__title">Frasers Property announces FY26 results, with recurring income anchoring a resilient year</h3>
+            <p class="nr-card__date">12 Nov 2026</p>
+          </a></li>
+          <li class="nr-card" data-cat="sustainability"><a href="#" class="nr-card__link">
+            <div class="nr-card__img"><img src="img/nr-2.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+            <h3 class="nr-card__title">Frasers Property marks strong performance in the 2026 GRESB assessment</h3>
+            <p class="nr-card__date">28 Oct 2026</p>
+          </a></li>
+          <li class="nr-card" data-cat="people"><a href="#" class="nr-card__link">
+            <div class="nr-card__img"><img src="img/nr-3.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+            <h3 class="nr-card__title">Frasers Property appoints Jai Mirpuri as Chief Executive Officer of its industrial and logistics business</h3>
+            <p class="nr-card__date">13 Oct 2026</p>
+          </a></li>
+          <li class="nr-card" data-cat="people hospitality"><a href="#" class="nr-card__link">
+            <div class="nr-card__img"><img src="img/nr-4.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+            <h3 class="nr-card__title">Frasers Property announces planned leadership transition for Frasers Hospitality</h3>
+            <p class="nr-card__date">09 Oct 2026</p>
+          </a></li>
+          <li class="nr-card" data-cat="investments"><a href="#" class="nr-card__link">
+            <div class="nr-card__img"><img src="img/nr-5.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+            <h3 class="nr-card__title">Frasers Property and Mitsubishi Estate to redevelop Valley Point and Fraser Suites Singapore</h3>
+            <p class="nr-card__date">02 Oct 2026</p>
+          </a></li>
+          <li class="nr-card" data-cat="hospitality"><a href="#" class="nr-card__link">
+            <div class="nr-card__img"><img src="img/nr-6.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+            <h3 class="nr-card__title">Frasers Hospitality unveils Fraser Suites Reserve, its new luxury serviced residence brand</h3>
+            <p class="nr-card__date">18 Sep 2026</p>
+          </a></li>
+          <li class="nr-card" data-cat="investments"><a href="#" class="nr-card__link">
+            <div class="nr-card__img"><img src="img/nr-7.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+            <h3 class="nr-card__title">Frasers Property-led consortium secures the Bayshore Drive integrated site</h3>
+            <p class="nr-card__date">04 Sep 2026</p>
+          </a></li>
+          <li class="nr-card" data-cat="community"><a href="#" class="nr-card__link">
+            <div class="nr-card__img"><img src="img/nr-8.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
+            <h3 class="nr-card__title">Making every step count at the Frasers Tower Vertical Challenge 2026</h3>
+            <p class="nr-card__date">21 Aug 2026</p>
+          </a></li>
+        </ul>
+        <p class="nr__empty" hidden>No stories in this topic yet.</p>
+      </div>
+      <a href="#" class="btn btn--outline btn--block m-only-flex">See all news</a>
     </div>
-    <a href="#" class="btn btn--outline">View all press releases</a>
-  </div>
-  <div class="news__grid">
-    <a href="#" class="news-card reveal">
-      <div class="news-card__img"><img src="img/news-1.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
-      <h3>Frasers Property appoints Jai Mirpuri as Chief Executive Officer of its industrial and logistics business</h3>
-      <p class="news-card__date">13 Oct 2026</p>
-    </a>
-    <a href="#" class="news-card reveal">
-      <div class="news-card__img"><img src="img/news-2.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
-      <h3>Frasers Property announces planned leadership transition for Frasers Hospitality</h3>
-      <p class="news-card__date">09 Oct 2026</p>
-    </a>
-    <a href="#" class="news-card reveal">
-      <div class="news-card__img"><img src="img/news-3.jpg" alt="" loading="lazy"><span class="tag tag--dark">News</span></div>
-      <h3>Frasers Property and Mitsubishi Estate to jointly redevelop Valley Point and Fraser Suites Singapore into landmark 999-year mixed-use riverfront destination</h3>
-      <p class="news-card__date">13 Oct 2026</p>
-    </a>
+    <div class="nr__fade nr__fade--top" aria-hidden="true"></div>
+    <div class="nr__fade nr__fade--bottom" aria-hidden="true"></div>
   </div>
 </section>
 

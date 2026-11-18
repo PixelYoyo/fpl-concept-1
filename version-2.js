@@ -121,3 +121,103 @@
   mq.addEventListener('change', sync);
   sync();
 })();
+
+/* Newsroom — topic filter + pinned two-column drift.
+   The stage pins for as long as the faster column needs to travel. Column A
+   starts at the top fade and ends with its last card above the bottom fade;
+   column B starts 120px lower and finishes 120px higher, so it moves faster. */
+(() => {
+  const root = document.querySelector('[data-newsroom]');
+  if (!root) return;
+
+  const stage = root.querySelector('.nr__stage');
+  const viewport = root.querySelector('.nr__viewport');
+  const cards = [...root.querySelectorAll('.nr-card')];
+  const chips = [...root.querySelectorAll('[data-filter]')];
+  const empty = root.querySelector('.nr__empty');
+  const nav = document.getElementById('nav');
+  const mobile = window.matchMedia('(max-width: 767px)');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const OFFSET = 120;
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+
+  let m = null;
+
+  function arrange() {
+    const visible = cards.filter((c) => !c.hidden);
+    cards.forEach((c) => c.classList.remove('is-b', 'is-lead', 'is-extra'));
+    visible.forEach((c, i) => {
+      c.classList.toggle('is-b', i % 2 === 1);
+      c.classList.toggle('is-lead', i === 0);
+      c.classList.toggle('is-extra', i > 2);
+    });
+    empty.hidden = visible.length > 0;
+    return visible;
+  }
+
+  function measure() {
+    const navH = nav ? nav.offsetHeight : 0;
+    root.style.setProperty('--nav-h', `${navH}px`);
+    root.classList.remove('is-pinned', 'is-static');
+    root.style.height = '';
+    cards.forEach((c) => c.style.removeProperty('--y'));
+    m = null;
+    if (mobile.matches || reduce.matches) return;
+
+    root.classList.add('is-pinned');
+    const visible = cards.filter((c) => !c.hidden);
+    const H = viewport.clientHeight;
+    const pad = parseFloat(getComputedStyle(root).getPropertyValue('--fade-h')); // start/end clear of the fades
+    const bottom = (list) => list.reduce((b, c) => Math.max(b, c.offsetTop + c.offsetHeight), 0);
+    const hA = bottom(visible.filter((c) => !c.classList.contains('is-b')));
+    const hB = bottom(visible.filter((c) => c.classList.contains('is-b')));
+    const TA = Math.max(0, hA + pad * 2 - H);
+    const TB = hB ? Math.max(0, hB + pad * 2 - H + OFFSET * 2) : 0;
+    const travel = Math.max(TA, TB);
+
+    // Few cards: centre them, nothing to pin.
+    const centre = travel === 0 ? Math.max(0, (H - Math.max(hA, hB + OFFSET)) / 2) : pad;
+    m = { pad: centre, TA, TB, travel };
+    root.style.height = `${stage.offsetHeight + travel}px`;
+    if (!travel) root.classList.replace('is-pinned', 'is-static');
+  }
+
+  function render() {
+    if (!m) return;
+    const navH = nav ? nav.offsetHeight : 0;
+    const range = root.offsetHeight - stage.offsetHeight;
+    const p = range > 0 ? clamp((navH - root.getBoundingClientRect().top) / range) : 0;
+    const yA = m.pad - p * m.TA;
+    const yB = m.pad + OFFSET - p * m.TB;
+    cards.forEach((c) => c.style.setProperty('--y', `${c.classList.contains('is-b') ? yB : yA}px`));
+  }
+
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    const f = chip.dataset.filter;
+    chips.forEach((c) => {
+      const on = c === chip;
+      c.classList.toggle('is-selected', on);
+      c.setAttribute('aria-pressed', String(on));
+    });
+    cards.forEach((c) => { c.hidden = f !== 'all' && !c.dataset.cat.split(' ').includes(f); });
+    arrange();
+    refresh();
+  }));
+
+  let queued = false;
+  const tick = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; render(); });
+  };
+  const refresh = () => { measure(); render(); };
+
+  arrange();
+  refresh();
+  window.addEventListener('scroll', tick, { passive: true });
+  window.addEventListener('resize', refresh);
+  mobile.addEventListener?.('change', refresh);
+  reduce.addEventListener?.('change', refresh);
+  document.fonts?.ready.then(refresh);
+  window.addEventListener('load', refresh);
+})();
