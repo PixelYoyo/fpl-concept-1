@@ -60,6 +60,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     if (!motionOn) return;
     hero();
+    sustainability(); // pinned: create before triggers further down the page
     sections();
     newsroom();
     insights();
@@ -231,6 +232,100 @@
           autoAlpha: 1, y: 0, duration: 1.1, ease: 'expo.out', stagger: 0.1, overwrite: 'auto',
         }),
       });
+    });
+  }
+
+  /* ---------------- Sustainability: pinned scroll-shrink (desktop) ----------------
+     The section arrives as a full-screen dark panel with the content centred
+     and the photo + number cards enlarged. Pinned under the nav, scrolling
+     shrinks the dark background back to the rounded card and the photo and
+     cards back to size, then the section releases. The background is a
+     separate layer (.sus__bg) clipped from full bleed to the card's rect, so
+     the content never reflows. */
+  function sustainability() {
+    const wrap = $('.sus-wrap');
+    if (!wrap) return;
+    const bg = $('.sus__bg', wrap);
+    const card = $('.sus', wrap);
+    const media = $('.sus__media', card);
+    const facets = $('.sus__facets', card);
+
+    mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+      wrap.classList.add('is-xsus');
+      let m = null;
+      const measure = () => {
+        gsap.set(media, { scale: 1 });
+        const W = wrap.clientWidth;
+        const H = wrap.clientHeight;
+        const cx = card.offsetLeft;
+        const cy = card.offsetTop;
+        const cw = card.offsetWidth;
+        const ch = card.offsetHeight;
+        // Photo + overhanging cards as one block, relative to the photo box.
+        const mw = media.offsetWidth;
+        const mh = media.offsetHeight;
+        const fx = facets.offsetLeft;
+        const blockBottom = Math.max(mh, facets.offsetTop + facets.offsetHeight);
+        // Grow ~40px towards the text and into the right gutter, capped by height.
+        const right = cw - (media.offsetLeft + mw); // padding to the card edge
+        const growL = 40;
+        const growR = Math.max(0, right + (W - cw) / 2 - 24);
+        const sW = 1 + (growL + growR) / (mw - fx);
+        const sH = (H - 64) / blockBottom;
+        const s = Math.max(1, Math.min(1.25, sW, sH));
+        // Anchor so the extra width splits growL : growR and height stays centred.
+        const ox = fx + (mw - fx) * (growL / (growL + growR || 1));
+        const oy = blockBottom / 2;
+        m = {
+          s,
+          origin: `${ox}px ${oy}px`,
+          clip: `inset(${cy}px ${W - cx - cw}px ${H - cy - ch}px ${cx}px round 32px)`,
+        };
+      };
+      measure();
+      const off = onRefreshInit(measure);
+
+      // Driven by scroll on the way down only: scrolling back up never
+      // re-expands it, the card simply stays shrunk.
+      const tl = gsap.timeline({ paused: true, defaults: { ease: 'sine.inOut' } })
+        .to({}, { duration: 0.12 }) // hold the full-screen frame first
+        .fromTo(bg, { clipPath: 'inset(0px 0px 0px 0px round 0px)' }, { clipPath: () => m.clip, duration: 1, immediateRender: true }, 0.12)
+        .fromTo(media, { scale: () => m.s, transformOrigin: () => m.origin }, { scale: 1, duration: 1, immediateRender: true }, 0.12)
+        .to({}, { duration: 0.15 }); // hold the card briefly before releasing
+      const seek = (p, instant) => {
+        if (p <= tl.progress()) return; // only ever move towards the card
+        if (instant) { gsap.killTweensOf(tl); tl.progress(p); return; }
+        gsap.to(tl, { progress: p, duration: 0.6, ease: 'power3.out', overwrite: true });
+      };
+      const pinST = ScrollTrigger.create({
+        trigger: wrap,
+        start: () => `top ${navH()}`,
+        end: () => `+=${wrap.offsetHeight * 0.9}`,
+        pin: true,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => { if (self.direction > 0) seek(self.progress); },
+        onLeave: () => seek(1),
+        onRefresh: (self) => {
+          // re-measured: rebuild the tweens and redraw at the furthest point reached
+          gsap.killTweensOf(tl);
+          const p = Math.max(tl.progress(), self.progress);
+          tl.invalidate().progress(Math.min(1, p + 0.001), true).progress(p, true);
+        },
+      });
+      // Re-arm once the section has scrolled away below the viewport, so the
+      // next pass down plays the shrink again (off-screen, so no visible jump).
+      const rearm = ScrollTrigger.create({
+        trigger: wrap,
+        start: 'top bottom',
+        onLeaveBack: () => { gsap.killTweensOf(tl); tl.progress(0); },
+      });
+
+      return () => {
+        off();
+        pinST.kill(); rearm.kill(); tl.kill();
+        wrap.classList.remove('is-xsus');
+        gsap.set([bg, media], { clearProps: 'clipPath,scale,transformOrigin' });
+      };
     });
   }
 

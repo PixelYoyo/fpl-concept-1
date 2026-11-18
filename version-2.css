@@ -623,3 +623,14 @@ html:not(.motion) .ins__end { display: none; }
   .sus .facet span .sus-m { flex: none; }
   .sus .btn--block { display: flex !important; margin-top: 0; }
 }
+
+/* Sustainability scroll-shrink (desktop motion, motion.js adds .is-xsus).
+   The section fills the viewport under the nav; the dark background is its own
+   layer so motion.js can clip it from full bleed down to the card. */
+.sus__bg { display: none; }
+.sus-wrap.is-xsus {
+  position: relative; display: flex; align-items: center;
+  min-height: calc(100vh - var(--nav-offset, 61px));
+}
+.sus-wrap.is-xsus .sus__bg { display: block; position: absolute; inset: 0; background: var(--ink); }
+.sus-wrap.is-xsus .sus { position: relative; width: 100%; background: transparent; }
