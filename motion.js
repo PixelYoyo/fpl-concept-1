@@ -558,8 +558,9 @@
   }
 
   /* ---------------- Footer ----------------
-     CTA copy rises in; the plum wordmark lifts out of the floor as the
-     footer scrolls into view. (The ribbons run on gsap.ticker, footer-ribbons.js.) */
+     CTA copy rises in as the footer scrolls into view. The plum wordmark is
+     static, tucked 4px under the link panel (Figma 279:2581).
+     (The ribbons run on gsap.ticker, footer-ribbons.js.) */
   function footer() {
     mm.add(MOTION, () => {
       const cta = $('.ft__cta');
@@ -567,13 +568,6 @@
         gsap.from(['.ft__cta-body', '.ft__cta-btn'], {
           autoAlpha: 0, y: 30, duration: 1.1, ease: 'expo.out', stagger: 0.1, delay: 0.25,
           scrollTrigger: { trigger: cta, start: 'top 75%' },
-        });
-      }
-      const mark = $('[data-wordmark]');
-      if (mark) {
-        gsap.fromTo(mark, { yPercent: 60 }, {
-          yPercent: 0, ease: 'none',
-          scrollTrigger: { trigger: mark, start: 'top bottom', end: 'bottom bottom', scrub: true },
         });
       }
     });
