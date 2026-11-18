@@ -98,19 +98,21 @@
   .lf__media { flex: none; height: 320px; }
 }
 
-/* Footer (Figma "New footer" 279:2703) — dark CTA band with an animated
-   wave of light (footer-waves.js), plum link panel over a dark body,
+/* Footer (Figma "New footer" 279:2703) — dark CTA band with three animated
+   ribbons (footer-ribbons.js), plum link panel over a dark body,
    oversized plum wordmark and legal row. Columns become an accordion on
    mobile (version-2.js). */
 .ft { position: relative; background: var(--ink); color: var(--white); overflow: hidden; border-radius: 48px 48px 0 0; }
 .ft__cta {
-  position: relative; height: 480px; overflow: hidden; background: var(--ink);
+  position: relative; height: 480px; background: var(--ink);
   display: flex; align-items: center;
 }
-.ft__waves { position: absolute; inset: 0; pointer-events: none; }
-.ft__waves canvas { display: block; width: 100%; height: 100%; }
+.ft__ribbons { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+/* Not clipped to the band: ribbons spill over the link panel below. The
+   footer's own overflow: hidden still clips the sides and rounded top. */
+.ft__ribbons svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .ft__cta-inner {
-  position: relative; z-index: 1; flex: 1; max-width: var(--maxw); margin: 0 auto;
+  position: relative; z-index: 3; flex: 1; max-width: var(--maxw); margin: 0 auto;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 48px;
   padding: 64px 80px 32px; text-align: center;
 }
