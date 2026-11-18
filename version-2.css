@@ -12,8 +12,9 @@
 /* GSAP owns .reveal on motion pages: no CSS transition fighting the tweens.
    Elements keep the hidden start state from styles.css until GSAP reveals them. */
 .motion .reveal { transition: none; }
-/* SplitText line masks: a little room so descenders aren't clipped. */
-.split-line-mask, .split-word-mask { padding-bottom: 0.08em; margin-bottom: -0.08em; }
+/* SplitText masks (SplitText names them "<class>-mask"): room below the
+   baseline so descenders (g, p, y) aren't clipped by the mask's overflow. */
+.splitline-mask, .splitword-mask { padding-bottom: 0.2em; margin-bottom: -0.2em; }
 
 /* Hero — scroll expand.
    The stage fills the viewport under the nav. motion.js pins it with

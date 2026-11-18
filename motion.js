@@ -151,9 +151,14 @@
     const title = $('.xhero__title');
     if (!title) return;
     mm.add(MOTION, () => {
-      const split = SplitText.create(title, { type: 'words', mask: 'words', wordsClass: 'split-word' });
+      const split = SplitText.create(title, { type: 'words', mask: 'words', wordsClass: 'splitword' });
       gsap.set(title, { autoAlpha: 1 });
-      gsap.from(split.words, { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.07, delay: 0.1 });
+      // Masks are only needed for the intro; drop them afterwards so nothing
+      // (e.g. the descender of the "g") can be clipped while the title scales.
+      gsap.from(split.words, {
+        yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.07, delay: 0.1,
+        onComplete: () => split.revert(),
+      });
       return () => split.revert();
     });
   }
@@ -169,7 +174,7 @@
     return SplitText.create(el, {
       type: 'lines',
       mask: 'lines',
-      linesClass: 'split-line',
+      linesClass: 'splitline',
       autoSplit: true, // re-split on resize / font load, keeping the animation in sync
       onSplit: (self) => gsap.from(self.lines, {
         yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.1, delay, scrollTrigger,
