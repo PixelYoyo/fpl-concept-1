@@ -98,20 +98,24 @@
   .lf__media { flex: none; height: 320px; }
 }
 
-/* Footer (Figma "Footer" 151:1091) — plum band with swoosh, CTA, dark link
-   panel, oversized dark wordmark and legal row. Columns become an accordion
-   on mobile (version-2.js). */
-.ft { position: relative; background: var(--plum); color: var(--white); border-radius: 32px 32px 0 0; overflow: hidden; }
-.ft__swoosh {
-  position: absolute; left: 50%; top: 159px; width: 2163.86px; height: 1217.92px; max-width: none;
-  transform: translate(-50%, -50%) rotate(21.67deg); pointer-events: none;
-}
+/* Footer (Figma "New footer" 279:2703) — dark CTA band with an animated
+   wave of light (footer-waves.js), plum link panel over a dark body,
+   oversized plum wordmark and legal row. Columns become an accordion on
+   mobile (version-2.js). */
+.ft { position: relative; background: var(--ink); color: var(--white); overflow: hidden; border-radius: 48px 48px 0 0; }
 .ft__cta {
-  position: relative; max-width: var(--maxw); margin: 0 auto;
-  display: flex; align-items: center; gap: 48px; padding: 64px 80px 32px;
+  position: relative; height: 480px; overflow: hidden; background: var(--ink);
+  display: flex; align-items: center;
 }
-.ft__cta-text { flex: 1; display: flex; flex-direction: column; gap: 12px; }
-.ft__cta-title { font-family: Arial, sans-serif; font-size: 32px; line-height: 40px; letter-spacing: -0.64px; }
+.ft__waves { position: absolute; inset: 0; pointer-events: none; }
+.ft__waves canvas { display: block; width: 100%; height: 100%; }
+.ft__cta-inner {
+  position: relative; z-index: 1; flex: 1; max-width: var(--maxw); margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 48px;
+  padding: 64px 80px 32px; text-align: center;
+}
+.ft__cta-text { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+.ft__cta-title { font-size: 48px; line-height: 56px; font-weight: 500; letter-spacing: -0.48px; }
 .ft__cta-body { font-size: 18px; line-height: 24px; }
 
 .ft__body {
@@ -119,7 +123,7 @@
   display: flex; flex-direction: column; align-items: center;
 }
 .ft__panel {
-  width: 100%; background: var(--ink); border-radius: 32px; padding: 40px 32px;
+  width: 100%; background: var(--plum); border-radius: 32px; padding: 40px 32px;
   display: flex; flex-direction: column; gap: 40px; margin-bottom: -4px; position: relative; z-index: 1;
 }
 .ft__top { display: flex; gap: 20px; padding-bottom: 48px; }
@@ -148,23 +152,23 @@
 .ft__wordmark { display: block; width: 953px; max-width: 100%; height: auto; }
 
 .ft__legal {
-  position: relative; max-width: var(--maxw); margin: 0 auto; padding: 20px;
+  position: relative; padding: 20px;
   display: flex; justify-content: space-between; align-items: center; font-size: 12px; line-height: normal;
 }
 .ft__legal-l, .ft__legal-r { display: flex; gap: 16px; }
 .ft__legal a:hover { text-decoration: underline; }
 
 @media (max-width: 1023px) {
-  .ft__cta { padding-inline: var(--gutter); }
+  .ft__cta-inner { padding-inline: var(--gutter); }
   .ft__top { flex-direction: column; gap: 32px; }
 }
 
 @media (max-width: 767px) {
   .ft { border-radius: 24px 24px 0 0; }
-  .ft__swoosh { left: calc(50% + 75.5px); top: 94px; width: 860.97px; height: 484.59px; }
-  .ft__cta { flex-direction: column; align-items: stretch; gap: 40px; padding: 24px 16px 32px; }
+  .ft__cta { height: 480px; }
+  .ft__cta-inner { align-items: stretch; gap: 40px; padding: 24px 16px 32px; }
   .ft__cta-text { gap: 16px; }
-  .ft__cta-title { font-family: var(--font); font-size: 24px; line-height: 32px; letter-spacing: -0.12px; }
+  .ft__cta-title { font-size: 32px; line-height: 40px; letter-spacing: -0.32px; }
   .ft__cta-body { font-size: 16px; line-height: 22px; }
   .ft__cta-btn { width: 100%; justify-content: center; }
 

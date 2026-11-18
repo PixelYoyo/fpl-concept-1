@@ -455,14 +455,16 @@
 
 <!-- ============ CTA + FOOTER ============ -->
 <footer class="ft">
-  <img class="ft__swoosh" src="img/footer-swoosh.svg" alt="" aria-hidden="true">
-  <div class="ft__cta">
-    <div class="ft__cta-text">
-      <p class="ft__cta-title">Have a question?</p>
-      <p class="ft__cta-body">Talk to our team about leasing, investment or a project near you.</p>
+  <section class="ft__cta">
+    <div class="ft__waves" data-waves aria-hidden="true"><canvas></canvas></div>
+    <div class="ft__cta-inner">
+      <div class="ft__cta-text">
+        <p class="ft__cta-title">Have a question?</p>
+        <p class="ft__cta-body">Talk to our team about leasing, investment or a project near you.</p>
+      </div>
+      <a href="#" class="btn btn--white ft__cta-btn">Contact us</a>
     </div>
-    <a href="#" class="btn btn--white ft__cta-btn">Contact us</a>
-  </div>
+  </section>
 
   <div class="ft__body">
     <div class="ft__panel">
@@ -503,7 +505,7 @@
         </div>
       </div>
     </div>
-    <img class="ft__wordmark" src="img/footer-wordmark.svg" alt="Frasers Property" width="953" height="298">
+    <img class="ft__wordmark" src="img/footer-wordmark-plum.svg" alt="Frasers Property" width="953" height="298">
   </div>
 
   <div class="ft__legal">
@@ -514,5 +516,6 @@
 
 <script src="script.js"></script>
 <script src="version-2.js"></script>
+<script src="footer-waves.js"></script>
 </body>
 </html>
