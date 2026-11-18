@@ -588,3 +588,38 @@ html:not(.motion) .ins__end { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .ops .country-card__inner { transform: none !important; }
 }
+
+/* ===== Sustainability — Figma Brief-draft 273:19907 (desktop) / 273:20335 (mobile) ===== */
+.sus-m { display: none; }
+/* number cards: frosted glass, white text */
+.sus .facet {
+  background: rgba(255,255,255,0.2); color: var(--white);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  min-height: 0;
+}
+/* hover lift uses `top`, not transform: a CSS transform transition fights the
+   GSAP entrance tween (motion.js) and left the cards stuck 40px low */
+.sus .facet { position: relative; top: 0; transition: top var(--t) var(--ease), box-shadow var(--t) var(--ease); }
+.sus .facet:hover { transform: none; top: -4px; box-shadow: 0 10px 24px rgba(0,0,0,0.3); }
+.sus .facet strong { letter-spacing: -0.16px; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .sus .facet { background: rgba(70,66,66,0.92); }
+}
+
+@media (max-width: 767px) {
+  .sus-m { display: inline; }
+  .sus-wrap { padding: 0; }
+  .sus { border-radius: 24px; padding: 48px 20px; gap: 32px; }
+  .sus__text { gap: 16px; }
+  .sus__text .overline { margin-bottom: -8px; }
+  .sus__body { margin-bottom: 0; }
+  /* image inset 16px, stats full width overlapping its bottom by 16px */
+  .sus__media { aspect-ratio: auto; border-radius: 0; }
+  .sus__media > img { display: block; width: calc(100% - 32px); height: 234px; aspect-ratio: auto; margin: 0 16px; }
+  .sus__facets { position: relative; left: 0; top: 0; margin-top: -16px; padding: 0; flex-direction: column; gap: 8px; }
+  .sus .facet { width: 100%; flex-direction: row; align-items: center; gap: 16px; padding: 16px 20px; }
+  .sus .facet strong { flex: 0 0 132px; }
+  .sus .facet span { flex: 1; min-width: 0; }
+  .sus .facet span .sus-m { flex: none; }
+  .sus .btn--block { display: flex !important; margin-top: 0; }
+}
