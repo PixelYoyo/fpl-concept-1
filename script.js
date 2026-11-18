@@ -161,6 +161,7 @@
   /* ---------------- Our businesses (scroll carousel) ---------------- */
   (() => {
     const root = $('[data-scroller="biz"]');
+    if (!root) return;
     const track = $('[data-track]', root);
     const cards = $$('.biz-card', track);
     const dots = $('[data-dots]', root);

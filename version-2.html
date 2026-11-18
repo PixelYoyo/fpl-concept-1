@@ -120,92 +120,98 @@
 </section>
 
 <!-- ============ OUR BUSINESSES ============ -->
-<section class="biz section" data-scroller="biz">
-  <div class="wrap section-head reveal">
-    <div class="section-head__text">
-      <p class="overline overline--lg">Our businesses</p>
-      <h2 class="h-xl">Five asset classes, one integrated real estate group</h2>
+<!-- Figma "Section" 279:2704. Desktop: one wide card + five slim ones; hover
+     previews a card, click keeps it. Mobile: vertical accordion. (version-2.js) -->
+<section class="bz section" data-bz>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-head__text">
+        <p class="overline overline--lg">Our businesses</p>
+        <h2 class="h-xl">Six asset classes, one integrated real estate group</h2>
+      </div>
     </div>
-    <a href="#" class="btn btn--outline d-only-flex">Explore our businesses</a>
-  </div>
 
-  <div class="biz__track" data-track>
-    <a href="#" class="biz-card">
-      <img src="img/card-1.jpg" alt="" loading="lazy">
-      <div class="biz-card__content">
-        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
-        <h3 class="biz-card__title">Residential</h3>
-        <div class="biz-card__more"><div>
-          <p>Homes and communities designed for the way people live, from apartments to master-planned estates.</p>
-          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
-        </div></div>
+    <div class="bz__grid">
+      <div class="bz__item is-active" style="--i:1">
+        <button class="bz__card" type="button" aria-expanded="true" aria-controls="bz-mixed-use">
+          <img src="img/biz-mixed-use.jpg" alt="" loading="lazy">
+          <span class="bz__label">Mixed-use</span>
+        </button>
+        <div class="bz__detail" id="bz-mixed-use" role="region" aria-label="Mixed-use">
+          <div class="bz__detail-text">
+            <h3 class="bz__title"><a href="https://www.frasersproperty.com/content/frasersproperty/corporate/what-we-do/our-portfolio/integrated.html">Mixed-use</a></h3>
+            <p class="bz__desc">Our mixed-use developments to live, work and play</p>
+          </div>
+          <a href="https://www.frasersproperty.com/content/frasersproperty/corporate/what-we-do/our-portfolio/integrated.html" class="btn btn--outline bz__cta">Explore mixed-use</a>
+        </div>
       </div>
-    </a>
-    <a href="#" class="biz-card">
-      <img src="img/card-1.jpg" alt="" loading="lazy">
-      <div class="biz-card__content">
-        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
-        <h3 class="biz-card__title">Integrated</h3>
-        <div class="biz-card__more"><div>
-          <p>Mixed-use precincts that bring homes, workplaces and retail together.</p>
-          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
-        </div></div>
+      <div class="bz__item" style="--i:2">
+        <button class="bz__card" type="button" aria-expanded="false" aria-controls="bz-residential">
+          <img src="img/biz-residential.jpg" alt="" loading="lazy">
+          <span class="bz__label">Residential</span>
+        </button>
+        <div class="bz__detail" id="bz-residential" role="region" aria-label="Residential">
+          <div class="bz__detail-text">
+            <h3 class="bz__title"><a href="https://www.frasersproperty.com/content/frasersproperty/corporate/what-we-do/our-portfolio/residential.html">Residential</a></h3>
+            <p class="bz__desc">We have a track record building homes that improve quality of life</p>
+          </div>
+          <a href="https://www.frasersproperty.com/content/frasersproperty/corporate/what-we-do/our-portfolio/residential.html" class="btn btn--outline bz__cta">Explore residential</a>
+        </div>
       </div>
-    </a>
-    <a href="#" class="biz-card">
-      <img src="img/card-2.jpg" alt="" loading="lazy">
-      <div class="biz-card__content">
-        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
-        <h3 class="biz-card__title">Hospitality</h3>
-        <div class="biz-card__more"><div>
-          <p>Serviced residences and hotels across more than 70 cities worldwide.</p>
-          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
-        </div></div>
+      <div class="bz__item" style="--i:3">
+        <button class="bz__card" type="button" aria-expanded="false" aria-controls="bz-hospitality">
+          <img src="img/biz-hospitality.jpg" alt="" loading="lazy">
+          <span class="bz__label">Hospitality</span>
+        </button>
+        <div class="bz__detail" id="bz-hospitality" role="region" aria-label="Hospitality">
+          <div class="bz__detail-text">
+            <h3 class="bz__title"><a href="https://www.frasershospitality.com">Hospitality</a></h3>
+            <p class="bz__desc">Over 100 service apartments, hotels and premium rental apartments</p>
+          </div>
+          <a href="https://www.frasershospitality.com" class="btn btn--outline bz__cta">Explore hospitality</a>
+        </div>
       </div>
-    </a>
-    <a href="#" class="biz-card">
-      <img src="img/card-3.jpg" alt="" loading="lazy">
-      <div class="biz-card__content">
-        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
-        <h3 class="biz-card__title">Commercial and business parks</h3>
-        <div class="biz-card__more"><div>
-          <p>Offices and business parks built for the way modern teams work.</p>
-          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
-        </div></div>
+      <div class="bz__item" style="--i:4">
+        <button class="bz__card" type="button" aria-expanded="false" aria-controls="bz-commercial">
+          <img src="img/biz-commercial.jpg" alt="" loading="lazy">
+          <span class="bz__label">Commercial</span>
+        </button>
+        <div class="bz__detail" id="bz-commercial" role="region" aria-label="Commercial &amp; business parks">
+          <div class="bz__detail-text">
+            <h3 class="bz__title"><a href="https://www.frasersproperty.com/content/frasersproperty/corporate/what-we-do/our-portfolio/commercial.html">Commercial &amp; business parks</a></h3>
+            <p class="bz__desc">We offer CBD office spaces and business parks for evolving work needs</p>
+          </div>
+          <a href="https://www.frasersproperty.com/content/frasersproperty/corporate/what-we-do/our-portfolio/commercial.html" class="btn btn--outline bz__cta">Explore commercial</a>
+        </div>
       </div>
-    </a>
-    <a href="#" class="biz-card">
-      <img src="img/investor.jpg" alt="" loading="lazy">
-      <div class="biz-card__content">
-        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
-        <h3 class="biz-card__title">Industrial and logistics</h3>
-        <div class="biz-card__more"><div>
-          <p>Logistics and light industrial facilities across Asia, Australia and Europe.</p>
-          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
-        </div></div>
+      <div class="bz__item" style="--i:5">
+        <button class="bz__card" type="button" aria-expanded="false" aria-controls="bz-retail">
+          <img src="img/biz-retail.jpg" alt="" loading="lazy">
+          <span class="bz__label">Retail</span>
+        </button>
+        <div class="bz__detail" id="bz-retail" role="region" aria-label="Retail">
+          <div class="bz__detail-text">
+            <h3 class="bz__title"><a href="https://www.frasersproperty.com/content/frasersproperty/corporate/what-we-do/our-portfolio/retail.html">Retail</a></h3>
+            <p class="bz__desc">We develop and manage malls that serve local communities</p>
+          </div>
+          <a href="https://www.frasersproperty.com/content/frasersproperty/corporate/what-we-do/our-portfolio/retail.html" class="btn btn--outline bz__cta">Explore retail</a>
+        </div>
       </div>
-    </a>
-    <a href="#" class="biz-card">
-      <img src="img/card-retail.jpg" alt="" loading="lazy">
-      <div class="biz-card__content">
-        <div class="biz-card__panel" aria-hidden="true"><img src="img/card-curve.svg" alt=""></div>
-        <h3 class="biz-card__title">Retail</h3>
-        <div class="biz-card__more"><div>
-          <p>Suburban malls and community hubs at the heart of everyday neighbourhood life.</p>
-          <svg class="icon icon--32 biz-card__arrow"><use href="#i-arrow-right"/></svg>
-        </div></div>
+      <div class="bz__item" style="--i:6">
+        <button class="bz__card" type="button" aria-expanded="false" aria-controls="bz-industrial">
+          <img src="img/biz-industrial.jpg" alt="" loading="lazy">
+          <span class="bz__label">Industrial</span>
+        </button>
+        <div class="bz__detail" id="bz-industrial" role="region" aria-label="Industrial &amp; logistics">
+          <div class="bz__detail-text">
+            <h3 class="bz__title"><a href="https://www.fraserspropertyindustrial.com">Industrial &amp; logistics</a></h3>
+            <p class="bz__desc">We help businesses find a place for the future</p>
+          </div>
+          <a href="https://www.fraserspropertyindustrial.com" class="btn btn--outline bz__cta">Explore industrial</a>
+        </div>
       </div>
-    </a>
-  </div>
-
-  <div class="wrap controls">
-    <div class="dots dots--dark" data-dots></div>
-    <div class="arrows">
-      <button class="arrow" data-prev aria-label="Previous"><svg class="icon"><use href="#i-arrow-left"/></svg></button>
-      <button class="arrow" data-next aria-label="Next"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
     </div>
   </div>
-  <div class="wrap m-only"><a href="#" class="btn btn--outline btn--block">Explore our businesses</a></div>
 </section>
 
 <!-- ============ WHERE WE OPERATE ============ -->

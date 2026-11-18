@@ -221,3 +221,34 @@
   document.fonts?.ready.then(refresh);
   window.addEventListener('load', refresh);
 })();
+
+/* Our businesses — expanding cards.
+   Desktop: hovering a slim card previews it (it widens, details swap);
+   clicking keeps it. Leaving the grid returns to the kept card.
+   Mobile: the same buttons work as a one-open accordion. */
+(() => {
+  const root = document.querySelector('[data-bz]');
+  if (!root) return;
+  const grid = root.querySelector('.bz__grid');
+  const items = [...root.querySelectorAll('.bz__item')];
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+  let selected = 0;
+
+  const show = (index) => {
+    items.forEach((item, i) => {
+      const on = i === index;
+      item.classList.toggle('is-active', on);
+      item.querySelector('.bz__card').setAttribute('aria-expanded', String(on));
+    });
+    grid.style.setProperty('--cols', items.map((_, i) => `minmax(0, ${i === index ? 4 : 1}fr)`).join(' '));
+  };
+
+  items.forEach((item, i) => {
+    const card = item.querySelector('.bz__card');
+    card.addEventListener('click', () => { selected = i; show(i); });
+    card.addEventListener('mouseenter', () => { if (canHover.matches) show(i); });
+  });
+  grid.addEventListener('mouseleave', () => { if (canHover.matches) show(selected); });
+
+  show(selected);
+})();
