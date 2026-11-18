@@ -11,15 +11,17 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ---------------- Reveal on scroll ---------------- */
-  const revealIO = new IntersectionObserver((entries) => {
+  /* ---------------- Reveal on scroll ----------------
+     Pages running GSAP motion (html.motion, see motion.js) reveal .reveal
+     elements with ScrollTrigger instead. */
+  const revealIO = document.documentElement.classList.contains('motion') ? null : new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
       e.target.classList.add('is-in');
       revealIO.unobserve(e.target);
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-  $$('.reveal').forEach((el) => {
+  if (revealIO) $$('.reveal').forEach((el) => {
     // light stagger for siblings that reveal together
     const sibs = $$(':scope > .reveal', el.parentElement);
     const i = sibs.indexOf(el);
@@ -104,59 +106,61 @@
      The track holds [clones][originals][clones]; `pos` is the position in that
      strip. After each move settles, if we've drifted into a clone set we jump
      silently (no transition) to the identical original, so it never rewinds. */
-  const featured = $('[data-carousel="featured"]');
-  const featTrack = $('[data-track]', featured);
-  const originals = $$('.feat-card', featTrack);
-  const N = originals.length;
-  const makeClone = (c) => {
-    const k = c.cloneNode(true);
-    k.classList.remove('is-active');
-    k.setAttribute('aria-hidden', 'true');
-    k.tabIndex = -1;
-    k.dataset.clone = '';
-    return k;
-  };
-  originals.slice().reverse().forEach((c) => featTrack.prepend(makeClone(c)));
-  originals.forEach((c) => featTrack.append(makeClone(c)));
-  const featCards = $$('.feat-card', featTrack);
-  let pos = N;
-  let settleTimer = null;
+  if ($('[data-carousel="featured"]')) {
+    const featured = $('[data-carousel="featured"]');
+    const featTrack = $('[data-track]', featured);
+    const originals = $$('.feat-card', featTrack);
+    const N = originals.length;
+    const makeClone = (c) => {
+      const k = c.cloneNode(true);
+      k.classList.remove('is-active');
+      k.setAttribute('aria-hidden', 'true');
+      k.tabIndex = -1;
+      k.dataset.clone = '';
+      return k;
+    };
+    originals.slice().reverse().forEach((c) => featTrack.prepend(makeClone(c)));
+    originals.forEach((c) => featTrack.append(makeClone(c)));
+    const featCards = $$('.feat-card', featTrack);
+    let pos = N;
+    let settleTimer = null;
 
-  const renderFeat = () => {
-    featTrack.style.setProperty('--i', pos);
-    featCards.forEach((c, j) => {
-      c.classList.toggle('is-active', j === pos);
-      c.classList.toggle('is-before', j < pos);
-    });
-  };
-  const normalize = () => {
-    clearTimeout(settleTimer);
-    settleTimer = null;
-    if (pos >= N && pos < 2 * N) return;
-    pos = ((pos - N) % N + N) % N + N;
-    featTrack.classList.add('no-anim');
-    renderFeat();
-    void featTrack.offsetWidth;
-    featTrack.classList.remove('no-anim');
-  };
-
-  const featCarousel = timedCarousel(featured, {
-    count: N,
-    duration: 7000,
-    onChange: (i, delta) => {
-      if (settleTimer) normalize(); // finish any pending reset before moving again
-      pos += delta;
+    const renderFeat = () => {
+      featTrack.style.setProperty('--i', pos);
+      featCards.forEach((c, j) => {
+        c.classList.toggle('is-active', j === pos);
+        c.classList.toggle('is-before', j < pos);
+      });
+    };
+    const normalize = () => {
+      clearTimeout(settleTimer);
+      settleTimer = null;
+      if (pos >= N && pos < 2 * N) return;
+      pos = ((pos - N) % N + N) % N + N;
+      featTrack.classList.add('no-anim');
       renderFeat();
-      settleTimer = setTimeout(normalize, 950); // after the 900ms slide
-    },
-  });
-  featCards.forEach((c, j) => c.addEventListener('click', (e) => {
-    if (j === pos) return; // active card: follow its link
-    e.preventDefault();    // other cards: bring them into view first
-    // step relative to the current card, so clicking a card on the right always moves forward
-    const current = ((pos - N) % N + N) % N;
-    featCarousel.go(current + (j - pos));
-  }));
+      void featTrack.offsetWidth;
+      featTrack.classList.remove('no-anim');
+    };
+
+    const featCarousel = timedCarousel(featured, {
+      count: N,
+      duration: 7000,
+      onChange: (i, delta) => {
+        if (settleTimer) normalize(); // finish any pending reset before moving again
+        pos += delta;
+        renderFeat();
+        settleTimer = setTimeout(normalize, 950); // after the 900ms slide
+      },
+    });
+    featCards.forEach((c, j) => c.addEventListener('click', (e) => {
+      if (j === pos) return; // active card: follow its link
+      e.preventDefault();    // other cards: bring them into view first
+      // step relative to the current card, so clicking a card on the right always moves forward
+      const current = ((pos - N) % N + N) % N;
+      featCarousel.go(current + (j - pos));
+    }));
+  }
 
   /* ---------------- Our businesses (scroll carousel) ---------------- */
   (() => {

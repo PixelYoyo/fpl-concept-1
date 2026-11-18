@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="version-2.css">
+  <!-- GSAP motion runs unless the visitor prefers reduced motion (motion.js drops the flag if GSAP fails to load). -->
+  <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');</script>
 </head>
 <body>
 
@@ -42,6 +44,9 @@
   </div>
 </header>
 
+<div id="smooth-wrapper">
+<div id="smooth-content">
+
 <main>
 
 <!-- ============ HERO (scroll expand) ============ -->
@@ -65,7 +70,7 @@
 <section class="latest" data-carousel="latest" aria-roledescription="carousel" aria-label="Latest from Frasers Property">
   <div class="latest__grid wrap">
     <div class="latest__left">
-      <h2 class="latest__title">Latest from<br class="d-only"> Frasers Property</h2>
+      <h2 class="latest__title" data-split>Latest from<br class="d-only"> Frasers Property</h2>
       <div class="controls controls--light d-only-flex">
         <div class="dots" data-dots></div>
         <div class="arrows">
@@ -265,60 +270,59 @@
   <a href="#" class="btn btn--outline btn--block m-only">Visit investor relations</a>
 </section>
 
-<!-- ============ FEATURED PROPERTIES (timed carousel) ============ -->
-<section class="featured section" data-carousel="featured" aria-roledescription="carousel" aria-label="Featured properties">
-  <div class="featured__swoosh" aria-hidden="true"><img src="img/swoosh.svg" alt=""></div>
-  <div class="wrap featured__head reveal">
-    <p class="overline overline--lg">Portfolio highlights</p>
-    <h2 class="h-xl">Featured properties</h2>
-  </div>
-  <div class="wrap controls featured__controls">
-    <div class="dots dots--dark" data-dots></div>
+<!-- ============ FEATURED PROPERTIES (depth carousel) ============ -->
+<section class="dfeat section" data-depth-carousel aria-roledescription="carousel" aria-label="Featured properties">
+  <div class="wrap dfeat__head">
+    <div class="dfeat__titles reveal">
+      <p class="overline overline--lg">Portfolio highlights</p>
+      <h2 class="h-xl">Featured properties</h2>
+    </div>
     <div class="arrows">
-      <button class="arrow" data-prev aria-label="Previous"><svg class="icon"><use href="#i-arrow-left"/></svg></button>
-      <button class="arrow" data-next aria-label="Next"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
+      <button class="arrow" data-prev aria-label="Previous property"><svg class="icon"><use href="#i-arrow-left"/></svg></button>
+      <button class="arrow" data-next aria-label="Next property"><svg class="icon"><use href="#i-arrow-right"/></svg></button>
     </div>
   </div>
   <div class="wrap">
-    <div class="featured__viewport">
-      <div class="featured__track" data-track>
-        <a href="#" class="feat-card is-active">
-          <div class="feat-card__img"><img src="img/property-1.jpg" alt=""><span class="tag tag--light">Hospitality</span></div>
-          <div class="feat-card__text">
-            <h3>Fraser Place Wujiaochang, Shanghai</h3>
-            <p>Serviced residences in Shanghai’s Wujiaochang business district.</p>
-          </div>
-        </a>
-        <a href="#" class="feat-card">
-          <div class="feat-card__img"><img src="img/property-2.jpg" alt=""><span class="tag tag--light">Commercial</span></div>
-          <div class="feat-card__text">
-            <h3>One Bangkok, Thailand</h3>
-            <p>A landmark integrated district in the heart of Bangkok.</p>
-          </div>
-        </a>
-        <a href="#" class="feat-card">
-          <div class="feat-card__img"><img src="img/insight-2.jpg" alt=""><span class="tag tag--light">Retail</span></div>
-          <div class="feat-card__text">
-            <h3>Northpoint City, Singapore</h3>
-            <p>The largest mall in Singapore’s north, connected to transit and homes.</p>
-          </div>
-        </a>
-        <a href="#" class="feat-card">
-          <div class="feat-card__img"><img src="img/insight-3.jpg" alt=""><span class="tag tag--light">Industrial</span></div>
-          <div class="feat-card__text">
-            <h3>Frasers Logistics Park, Germany</h3>
-            <p>Sustainable logistics facilities serving Europe’s key trade corridors.</p>
-          </div>
-        </a>
-        <a href="#" class="feat-card">
-          <div class="feat-card__img"><img src="img/insight-1.jpg" alt=""><span class="tag tag--light">Residential</span></div>
-          <div class="feat-card__text">
-            <h3>Waterway Point, Punggol</h3>
-            <p>Waterfront living and retail designed around community.</p>
-          </div>
-        </a>
+    <div class="dfeat__stage" data-stage tabindex="0" aria-label="Featured properties, use the left and right arrow keys to browse">
+      <a href="#" class="dfeat__card" aria-roledescription="slide" aria-label="1 of 5: Fraser Place Wujiaochang, Shanghai">
+        <img src="img/property-1.jpg" alt="" draggable="false"><span class="tag tag--light">Hospitality</span><span class="dfeat__tint"></span>
+      </a>
+      <a href="#" class="dfeat__card" aria-roledescription="slide" aria-label="2 of 5: One Bangkok, Thailand">
+        <img src="img/property-2.jpg" alt="" draggable="false"><span class="tag tag--light">Commercial</span><span class="dfeat__tint"></span>
+      </a>
+      <a href="#" class="dfeat__card" aria-roledescription="slide" aria-label="3 of 5: Northpoint City, Singapore">
+        <img src="img/insight-2.jpg" alt="" draggable="false"><span class="tag tag--light">Retail</span><span class="dfeat__tint"></span>
+      </a>
+      <a href="#" class="dfeat__card" aria-roledescription="slide" aria-label="4 of 5: Frasers Logistics Park, Germany">
+        <img src="img/insight-3.jpg" alt="" draggable="false"><span class="tag tag--light">Industrial</span><span class="dfeat__tint"></span>
+      </a>
+      <a href="#" class="dfeat__card" aria-roledescription="slide" aria-label="5 of 5: Waterway Point, Punggol">
+        <img src="img/insight-1.jpg" alt="" draggable="false"><span class="tag tag--light">Residential</span><span class="dfeat__tint"></span>
+      </a>
+    </div>
+    <div class="dfeat__captions" aria-live="polite">
+      <div class="dfeat__caption">
+        <h3><a href="#">Fraser Place Wujiaochang, Shanghai</a></h3>
+        <p>Serviced residences in Shanghai’s Wujiaochang business district.</p>
+      </div>
+      <div class="dfeat__caption">
+        <h3><a href="#">One Bangkok, Thailand</a></h3>
+        <p>A landmark integrated district in the heart of Bangkok.</p>
+      </div>
+      <div class="dfeat__caption">
+        <h3><a href="#">Northpoint City, Singapore</a></h3>
+        <p>The largest mall in Singapore’s north, connected to transit and homes.</p>
+      </div>
+      <div class="dfeat__caption">
+        <h3><a href="#">Frasers Logistics Park, Germany</a></h3>
+        <p>Sustainable logistics facilities serving Europe’s key trade corridors.</p>
+      </div>
+      <div class="dfeat__caption">
+        <h3><a href="#">Waterway Point, Punggol</a></h3>
+        <p>Waterfront living and retail designed around community.</p>
       </div>
     </div>
+    <div class="dots dfeat__dots" data-dots></div>
   </div>
 </section>
 
@@ -415,33 +419,69 @@
   </div>
 </section>
 
-<!-- ============ INSIGHTS ============ -->
-<section class="news news--insights section wrap">
-  <div class="section-head reveal">
-    <div class="section-head__text">
-      <p class="overline overline--lg">Insights</p>
-      <h2 class="h-xl">Perspectives on cities, communities and real estate</h2>
+<!-- ============ INSIGHTS (scroll stack) ============ -->
+<section class="ins section" data-scroll-stack>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-head__text">
+        <p class="overline overline--lg">Insights</p>
+        <h2 class="h-xl">Perspectives on cities, communities and real estate</h2>
+      </div>
+      <a href="#" class="btn btn--outline d-only-flex">View all insights</a>
     </div>
-    <a href="#" class="btn btn--outline d-only-flex">View all insights</a>
+    <div class="ins__stack" data-stack-inner>
+      <div class="ins__slot" data-stack-slot>
+        <a href="#" class="ins-card">
+          <img class="ins-card__img" src="img/insight-1-lg.jpg" alt="" loading="lazy">
+          <div class="ins-card__panel">
+            <div class="ins-card__text">
+              <span class="tag tag--dark">Insight</span>
+              <div class="ins-card__copy">
+                <h3>Beyond zero-sum: How real estate and public policy can co-create future cities</h3>
+                <p class="ins-card__date">7 Oct 2026</p>
+              </div>
+            </div>
+            <span class="text-link ins-card__link">Read the story <svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></span>
+          </div>
+          <span class="ins-card__shade" aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="ins__slot" data-stack-slot>
+        <a href="#" class="ins-card">
+          <img class="ins-card__img" src="img/insight-2.jpg" alt="" loading="lazy">
+          <div class="ins-card__panel">
+            <div class="ins-card__text">
+              <span class="tag tag--dark">Insight</span>
+              <div class="ins-card__copy">
+                <h3>The power of listening: How we create value by understanding people’s needs</h3>
+                <p class="ins-card__date">25 Aug 2026</p>
+              </div>
+            </div>
+            <span class="text-link ins-card__link">Read the story <svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></span>
+          </div>
+          <span class="ins-card__shade" aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="ins__slot" data-stack-slot>
+        <a href="#" class="ins-card">
+          <img class="ins-card__img" src="img/insight-3.jpg" alt="" loading="lazy">
+          <div class="ins-card__panel">
+            <div class="ins-card__text">
+              <span class="tag tag--dark">Insight</span>
+              <div class="ins-card__copy">
+                <h3>Being adaptable and resilient: here's how we future-proof Europe’s industrial infrastructure</h3>
+                <p class="ins-card__date">25 Aug 2026</p>
+              </div>
+            </div>
+            <span class="text-link ins-card__link">Read the story <svg class="icon icon--16 text-red"><use href="#i-arrow-right"/></svg></span>
+          </div>
+          <span class="ins-card__shade" aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="ins__end" data-stack-end aria-hidden="true"></div>
+    </div>
+    <a href="#" class="btn btn--outline btn--block m-only">View all insights</a>
   </div>
-  <div class="news__grid">
-    <a href="#" class="news-card reveal">
-      <div class="news-card__img"><img src="img/insight-1.jpg" alt="" loading="lazy"><span class="tag tag--dark">Insight</span></div>
-      <h3>Beyond zero-sum: How real estate and public policy can co-create future cities</h3>
-      <p class="news-card__date">7 Oct 2026</p>
-    </a>
-    <a href="#" class="news-card reveal">
-      <div class="news-card__img"><img src="img/insight-2.jpg" alt="" loading="lazy"><span class="tag tag--dark">Insight</span></div>
-      <h3>The power of listening: How we create value by understanding people’s needs</h3>
-      <p class="news-card__date">25 Aug 2026</p>
-    </a>
-    <a href="#" class="news-card reveal">
-      <div class="news-card__img"><img src="img/insight-3.jpg" alt="" loading="lazy"><span class="tag tag--dark">Insight</span></div>
-      <h3>Being adaptable and resilient: here's how we future-proof Europe’s industrial infrastructure</h3>
-      <p class="news-card__date">25 Aug 2026</p>
-    </a>
-  </div>
-  <a href="#" class="btn btn--outline btn--block m-only">View all insights</a>
 </section>
 
 <!-- ============ LARGE LINKS ============ -->
@@ -459,7 +499,7 @@
     <div class="ft__ribbons" data-ribbons aria-hidden="true"></div>
     <div class="ft__cta-inner">
       <div class="ft__cta-text">
-        <p class="ft__cta-title">Have a question?</p>
+        <p class="ft__cta-title" data-split>Have a question?</p>
         <p class="ft__cta-body">Talk to our team about leasing, investment or a project near you.</p>
       </div>
       <a href="#" class="btn btn--white ft__cta-btn">Contact us</a>
@@ -505,7 +545,7 @@
         </div>
       </div>
     </div>
-    <img class="ft__wordmark" src="img/footer-wordmark-plum.svg" alt="Frasers Property" width="953" height="298">
+    <img class="ft__wordmark" data-wordmark src="img/footer-wordmark-plum.svg" alt="Frasers Property" width="953" height="298">
   </div>
 
   <div class="ft__legal">
@@ -514,6 +554,15 @@
   </div>
 </footer>
 
+</div><!-- /#smooth-content -->
+</div><!-- /#smooth-wrapper -->
+
+<!-- GSAP 3.13 (vendored so the prototype also runs from disk) -->
+<script src="vendor/gsap/gsap.min.js"></script>
+<script src="vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="vendor/gsap/ScrollSmoother.min.js"></script>
+<script src="vendor/gsap/SplitText.min.js"></script>
+<script src="motion.js"></script>
 <script src="script.js"></script>
 <script src="version-2.js"></script>
 <script src="footer-ribbons.js"></script>

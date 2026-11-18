@@ -97,24 +97,38 @@
     });
     host.appendChild(svg);
 
-    let w = 1, h = 1, time = 0, last = 0, raf = 0, visible = false;
+    let w = 1, h = 1, time = 0, running = false, visible = false;
 
     const draw = () => {
       paths.forEach((path, i) => path.setAttribute('d', ribbonPath(RIBBONS[i], time, w, h)));
     };
 
-    const frame = (now) => {
-      raf = 0;
-      if (!visible || document.hidden || mqReduce.matches) { last = 0; return; }
-      const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
-      last = now;
-      time = (time + dt) % LOOP;
+    // Runs on GSAP's ticker (the same frame loop as ScrollSmoother), with a
+    // requestAnimationFrame fallback if GSAP isn't on the page.
+    const ticker = window.gsap ? gsap.ticker : null;
+    let raf = 0, last = 0;
+    const canRun = () => visible && !document.hidden && !mqReduce.matches;
+    const step = (dtMs) => {
+      if (!canRun()) { sleep(); return; }
+      time = (time + Math.min(0.05, dtMs / 1000)) % LOOP;
       draw();
-      raf = requestAnimationFrame(frame);
     };
-
+    const onTick = (t, dtMs) => step(dtMs);
+    const onFrame = (now) => {
+      const dt = last ? now - last : 0;
+      last = now;
+      step(dt);
+      if (running) raf = requestAnimationFrame(onFrame);
+    };
+    const sleep = () => {
+      if (!running) return;
+      running = false;
+      if (ticker) ticker.remove(onTick); else { cancelAnimationFrame(raf); last = 0; }
+    };
     const wake = () => {
-      if (!raf && visible && !document.hidden && !mqReduce.matches) raf = requestAnimationFrame(frame);
+      if (running || !canRun()) return;
+      running = true;
+      if (ticker) ticker.add(onTick); else raf = requestAnimationFrame(onFrame);
     };
 
     const resize = () => {

@@ -1,31 +1,46 @@
 /* ===== Version 2 only ===== */
 
+/* Smooth scrolling (GSAP ScrollSmoother, motion.js).
+   The nav sits outside #smooth-wrapper so it stays fixed while the content
+   is translated; the content is padded by the nav height instead.
+   Pinned sections use ScrollTrigger pins, not position: sticky (sticky
+   doesn't work inside the transformed smooth content). */
+.nav { position: fixed; left: 0; right: 0; top: 0; }
+#smooth-content { padding-top: var(--nav-offset, 61px); }
+@media (max-width: 767px) { #smooth-content { padding-top: var(--nav-offset, 63px); } }
+
+/* GSAP owns .reveal on motion pages: no CSS transition fighting the tweens.
+   Elements keep the hidden start state from styles.css until GSAP reveals them. */
+.motion .reveal { transition: none; }
+/* SplitText line masks: a little room so descenders aren't clipped. */
+.split-line-mask, .split-word-mask { padding-bottom: 0.08em; margin-bottom: -0.08em; }
+
 /* Hero — scroll expand.
-   The section is taller than the viewport; its stage sticks under the nav
-   and fills the rest of the viewport while the video card grows from a
-   centred rounded card to full bleed. version-2.js drives the geometry. */
+   The stage fills the viewport under the nav. motion.js pins it with
+   ScrollTrigger and scrubs a timeline: the video's clip-path opens from a
+   centred rounded card to full bleed while the title settles. Without
+   motion it simply shows the expanded end state. */
 .xhero {
   --nav-h: 61px;
   --stage-h: calc(100vh - var(--nav-h));
   position: relative;
-  height: calc(var(--stage-h) * 2.2);
   background: var(--ink);
 }
 @supports (height: 100svh) {
   .xhero { --stage-h: calc(100svh - var(--nav-h)); }
 }
 .xhero__stage {
-  position: sticky; top: var(--nav-h);
+  position: relative;
   height: var(--stage-h);
   overflow: hidden; color: var(--white);
 }
 
 .xhero__media {
   position: absolute; left: 0; top: 0; width: 100%; height: 100%;
-  overflow: hidden; border-radius: 0;
-  will-change: left, top, width, height;
+  overflow: hidden;
+  will-change: clip-path;
 }
-.xhero__media video { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; display: block; }
+.xhero__media video { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; display: block; will-change: transform; }
 .xhero__shade {
   position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 97%);
@@ -53,10 +68,6 @@
   .xhero__title { font-size: 40px; line-height: 48px; letter-spacing: -0.4px; }
 }
 
-/* No scrubbing: show the expanded hero at viewport height. */
-@media (prefers-reduced-motion: reduce) {
-  .xhero { height: var(--stage-h); }
-}
 
 /* "I'm looking for" — photo band with a curved stone panel.
    The photo covers the whole section; the panel sits on top, its curved
@@ -218,7 +229,6 @@
   .nr { --stage-h: calc(100svh - var(--nav-h)); }
 }
 .nr__stage { position: relative; height: var(--stage-h); overflow: hidden; }
-.nr.is-pinned .nr__stage { position: sticky; top: var(--nav-h); }
 .nr__inner {
   height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 48px;
 }
@@ -238,8 +248,9 @@
   justify-content: end;
 }
 .nr.is-pinned .nr__grid { padding: 0; }
-.nr-card { --y: 0px; transform: translateY(var(--y)); will-change: transform; }
-.nr-card.is-b { --y: 120px; }
+/* --ya / --yb: column offsets, scrubbed on .nr by motion.js */
+.nr-card { --y: var(--ya, 0px); transform: translateY(var(--y)); will-change: transform; }
+.nr-card.is-b { --y: var(--yb, 120px); }
 .nr-card[hidden] { display: none; }
 .nr__empty { padding-top: 40vh; text-align: center; font-size: 16px; }
 
@@ -366,4 +377,158 @@
 @media (prefers-reduced-motion: reduce) {
   .bz__grid, .bz__card, .bz__card img { transition: none; }
   .bz__item.is-active .bz__detail { animation: none; }
+}
+
+/* Featured properties — depth carousel.
+   Cards recede on a 3D rail behind the active one (React Bits "Depth
+   Carousel" interaction). version-2.js sets each card's transform, opacity,
+   brightness/blur filter, tint and z-index every frame. Desktop geometry
+   follows Figma: 743px active card (58.05% of the 1280 content width), 3:2. */
+.dfeat { overflow: hidden; padding-bottom: 120px; }
+.dfeat__head {
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+  margin-bottom: 32px;
+}
+.dfeat__titles { max-width: 800px; display: flex; flex-direction: column; gap: 8px; }
+
+.dfeat__stage {
+  --card-w: 58.05%;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1280 / 495.33; /* stage height = active card height */
+  perspective: 1400px; perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  cursor: grab; outline: none;
+}
+.dfeat__stage.is-dragging { cursor: grabbing; }
+.dfeat__stage:focus-visible { outline: 2px solid var(--ink); outline-offset: 8px; border-radius: var(--radius); }
+
+.dfeat__card {
+  position: absolute; left: 50%; top: 50%;
+  width: var(--card-w); aspect-ratio: 3 / 2;
+  display: flex; align-items: flex-end; padding: 24px;
+  border-radius: var(--radius); overflow: hidden; color: var(--white);
+  background: #0b0d12;
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.65),
+    0 8px 20px -10px rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  will-change: transform, opacity, filter;
+  -webkit-user-drag: none;
+}
+.dfeat__card img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  pointer-events: none; -webkit-user-drag: none;
+}
+.dfeat__card .tag { position: relative; z-index: 1; }
+.dfeat__tint {
+  position: absolute; inset: 0; z-index: 2; opacity: 0; pointer-events: none;
+  background: #05060a; mix-blend-mode: multiply;
+}
+
+/* Caption sits under the active card, left-aligned with it.
+   All captions share one grid cell so the height never jumps. */
+.dfeat__captions {
+  display: grid; width: var(--card-w, 58.05%); margin: 16px auto 0;
+}
+.dfeat__caption {
+  grid-area: 1 / 1; display: flex; flex-direction: column; gap: 12px;
+  opacity: 0; transform: translateY(8px); visibility: hidden;
+  transition: opacity var(--t) var(--ease), transform var(--t) var(--ease), visibility 0s linear var(--t);
+}
+.dfeat__caption.is-active {
+  opacity: 1; transform: none; visibility: visible;
+  transition: opacity var(--t-slow) var(--ease) 200ms, transform var(--t-slow) var(--ease) 200ms, visibility 0s;
+}
+.dfeat__caption h3 { font-size: 32px; line-height: 40px; font-weight: 500; letter-spacing: -0.16px; }
+.dfeat__caption h3 a {
+  color: inherit;
+  text-decoration: underline; text-decoration-color: transparent;
+  text-decoration-thickness: 1px; text-underline-offset: 5px;
+  transition: color var(--t-fast) var(--ease), text-decoration-color var(--t-fast) var(--ease);
+}
+.dfeat__caption h3 a:hover, .dfeat__caption h3 a:focus-visible { color: var(--red-dark); text-decoration-color: currentColor; }
+.dfeat__caption p { font-size: 16px; line-height: 22px; }
+
+.dfeat__dots { justify-content: center; margin-top: 32px; }
+
+@media (max-width: 767px) {
+  .dfeat { padding-bottom: 48px; }
+  .dfeat__head { margin-bottom: 24px; }
+  .dfeat .arrow, .dfeat .arrow .icon { width: 24px; height: 24px; }
+  .dfeat__stage { --card-w: 78%; aspect-ratio: 100 / 52; }
+  .dfeat__captions { --card-w: 78%; }
+  .dfeat__card { padding: 16px; }
+  .dfeat__caption h3 { font-size: 24px; line-height: 32px; }
+  .dfeat__dots { margin-top: 24px; }
+}
+
+/* Insights — scroll stack.
+   Cards pin under each other as the page scrolls; the ones underneath
+   shrink and dim (React Bits "Scroll Stack" behaviour). version-2.js sets
+   slot offsets and each card's scale + shade. Card per Figma: 456px tall,
+   32px radius, photo full-bleed under a frosted, curved text panel. */
+/* motion.js pins each slot with ScrollTrigger (pinSpacing: false) and
+   scrubs the scale + shade of the cards underneath. */
+/* A flex gap (not sibling margins) so spacing survives ScrollTrigger's pin-spacers. */
+.ins__stack { display: flex; flex-direction: column; gap: 100px; }
+.ins__slot { position: relative; }
+.ins__end { height: 100px; } /* + the 100px gap = the 200px hold */
+html:not(.motion) .ins__stack { gap: 24px; }
+html:not(.motion) .ins__end { display: none; }
+.ins-card {
+  position: relative; display: block; height: 456px;
+  border-radius: 32px; overflow: hidden; color: var(--ink);
+  background: #f5f5f4;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 -12px 40px -16px rgba(0, 0, 0, 0.35),
+    0 24px 48px -24px rgba(0, 0, 0, 0.4);
+  transform-origin: 50% 0;
+  will-change: transform;
+}
+.ins-card__img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+.ins-card:hover .ins-card__img { transform: scale(1.03); }
+.ins-card__panel {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 48.9%; /* 626 / 1280 */
+  display: flex; flex-direction: column; justify-content: space-between; align-items: stretch;
+  padding: 32px 44px 32px 32px;
+  background: url("img/insight-panel.svg") center / 100% 100% no-repeat;
+}
+.ins-card__text { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+.ins-card__copy { display: flex; flex-direction: column; gap: 12px; }
+.ins-card__copy h3 {
+  font-size: 32px; line-height: 40px; font-weight: 500; letter-spacing: -0.16px;
+  text-decoration: underline; text-decoration-color: transparent;
+  text-decoration-thickness: 1px; text-underline-offset: 5px;
+  transition: color var(--t-fast) var(--ease), text-decoration-color var(--t-fast) var(--ease);
+}
+.ins-card:hover .ins-card__copy h3, .ins-card:focus-visible .ins-card__copy h3 { color: var(--red-dark); text-decoration-color: currentColor; }
+.ins-card__date { font-size: 14px; line-height: 20px; }
+.ins-card__link { align-self: flex-end; }
+.ins-card:hover .ins-card__link .icon { transform: translateX(4px); }
+.ins-card__shade {
+  position: absolute; inset: 0; border-radius: inherit; background: #000;
+  opacity: var(--stack-dim, 0); pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .ins-card__panel { width: 62%; }
+}
+@media (max-width: 767px) {
+  /* photo on top, solid text panel below */
+  .ins-card { display: flex; flex-direction: column; height: 520px; border-radius: 24px; }
+  .ins-card__img { position: relative; inset: auto; flex: 1 1 auto; min-height: 0; height: auto; }
+  .ins-card__panel {
+    position: relative; width: 100%; flex: none; gap: 24px;
+    padding: 20px; background: #f5f5f4;
+  }
+  .ins-card__text { gap: 16px; }
+  .ins-card__copy h3 { font-size: 24px; line-height: 32px; letter-spacing: -0.12px; }
+  .ins .btn--block { margin-top: 24px; }
 }
