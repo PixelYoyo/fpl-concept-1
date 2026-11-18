@@ -74,16 +74,29 @@
    The photo covers the whole section; the panel sits on top, its curved
    edge (Figma shape) cut out of the right side on desktop, the bottom on mobile. */
 .lf {
+  /* Left edge of .wrap content, so the panel text lines up with every other
+     section on screens wider than --maxw. */
+  --lf-edge: max(var(--gutter), calc((100% - var(--maxw)) / 2 + var(--gutter)));
   position: relative; display: flex; align-items: stretch; min-height: 458px;
   background: var(--white) url("img/looking-for.jpg") center / cover no-repeat;
 }
 .lf__panel {
-  position: relative; flex: 0 0 calc(var(--gutter) + 427px);
+  position: relative; flex: 0 0 calc(var(--lf-edge) + 427px);
   display: flex; flex-direction: column; justify-content: center; gap: 20px;
-  padding: 24px 64px 32px var(--gutter);
+  padding: 24px 64px 32px var(--lf-edge);
 }
 .lf__shape { position: absolute; inset: 0; pointer-events: none; }
 .lf__shape > div, .lf__shape img { width: 100%; height: 100%; }
+@media (min-width: 768px) {
+  /* The curved edge keeps its Figma width (507px) on the right; a solid
+     stone fill extends it to the left as the panel widens, so the curve is
+     never stretched. */
+  .lf__shape > div { position: absolute; top: 0; bottom: 0; right: 0; width: min(507px, 100%); }
+  .lf__shape::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 0;
+    right: calc(min(507px, 100%) - 1px); background: #F5F5F4;
+  }
+}
 .lf__title { position: relative; font-size: 24px; line-height: 32px; font-weight: 500; letter-spacing: -0.48px; }
 .lf__links { position: relative; display: flex; flex-direction: column; gap: 20px; }
 .lf__link {
@@ -102,7 +115,7 @@
 
 @media (max-width: 767px) {
   .lf { flex-direction: column; min-height: 0; }
-  .lf__panel { flex: none; gap: 32px; padding: 24px 20px 32px; }
+  .lf__panel { flex: none; gap: 32px; padding: 24px var(--gutter) 32px; }
   .lf__title { font-size: 20px; line-height: 28px; }
   /* Figma rotates the same vertical shape 90° so the curve sits on the bottom edge. */
   .lf__shape { display: flex; align-items: center; justify-content: center; container-type: size; }
