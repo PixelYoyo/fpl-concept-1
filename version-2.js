@@ -340,3 +340,43 @@
     layout(pos);
   }
 })();
+
+/* Where we operate — tilt + cursor glare on the open country card (desktop pointer only). */
+(() => {
+  const card = document.querySelector('.ops [data-popup]');
+  const inner = card && card.querySelector('[data-popup-inner]');
+  if (!inner) return;
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const MAX = 10; // degrees
+  let frame = 0;
+
+  const reset = () => {
+    cancelAnimationFrame(frame);
+    inner.classList.remove('is-tilting');
+    inner.style.setProperty('--rx', '0deg');
+    inner.style.setProperty('--ry', '0deg');
+  };
+
+  inner.addEventListener('pointermove', (e) => {
+    if (!fine.matches || !card.classList.contains('is-open')) return;
+    const { clientX, clientY } = e;
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      const r = inner.getBoundingClientRect();
+      const px = (clientX - r.left) / r.width;  // 0..1
+      const py = (clientY - r.top) / r.height;
+      inner.style.setProperty('--gx', `${(px * 100).toFixed(1)}%`);
+      inner.style.setProperty('--gy', `${(py * 100).toFixed(1)}%`);
+      if (!reduce.matches) {
+        inner.style.setProperty('--ry', `${((px - 0.5) * 2 * MAX).toFixed(2)}deg`);
+        inner.style.setProperty('--rx', `${((0.5 - py) * 2 * MAX).toFixed(2)}deg`);
+      }
+      inner.classList.add('is-tilting');
+    });
+  });
+  inner.addEventListener('pointerleave', reset);
+  // settle flat whenever the card closes
+  new MutationObserver(() => { if (!card.classList.contains('is-open')) reset(); })
+    .observe(card, { attributes: true, attributeFilter: ['class'] });
+})();

@@ -546,3 +546,45 @@ html:not(.motion) .ins__end { display: none; }
   .ins-card__copy h3 { font-size: 24px; line-height: 32px; letter-spacing: -0.12px; }
   .ins .btn--block { margin-top: 24px; }
 }
+
+/* ===== Where we operate — open country card: glass + 3D tilt + cursor glare ===== */
+.ops .country-card { perspective: 900px; width: min(416px, 100%); }
+/* Figma: link sits bottom-right, 16px gap + 20px top padding below the panel */
+.ops .country-card .cc__name { padding-block: 0; }
+.ops .country-card__inner .cc__link { display: flex; width: fit-content; margin: 36px 0 0 auto; }
+.ops .country-card__inner {
+  /* Figma DS-brief 185:1600 — 5% ink tint, 20px radius, no border/shadow; frosted behind */
+  position: relative; isolation: isolate; overflow: hidden;
+  background: rgba(27,24,24,0.05);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: none;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) scale(var(--tilt-scale, 1));
+  transform-style: preserve-3d;
+  transition:
+    opacity var(--t-fast) var(--ease),
+    transform 0.5s var(--ease-out);
+  will-change: transform;
+}
+/* while the cursor is on the card, follow it closely */
+.ops .country-card__inner.is-tilting {
+  --tilt-scale: 1.02;
+  transition: opacity var(--t-fast) var(--ease), transform 0.12s linear;
+}
+/* tags: plain Figma shape (white 20%), no extra fill or outline */
+.ops .country-card .tags .tag { background-color: transparent; box-shadow: none; }
+/* cursor illumination */
+.ops .country-card__inner::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(300px circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255,255,255,0.6), rgba(255,255,255,0.12) 45%, transparent 70%);
+  opacity: 0; transition: opacity 0.3s var(--ease);
+}
+.ops .country-card__inner.is-tilting::before { opacity: 1; }
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ops .country-card__inner { background: var(--tint-solid); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ops .country-card__inner { transform: none !important; }
+}
