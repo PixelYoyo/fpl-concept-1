@@ -105,7 +105,19 @@
         const overhang = mobile ? 52 : -32; // title bottom relative to card bottom
         const cardTop = (H - (ch + Math.max(0, overhang))) / 2;
         const x = (W - cw) / 2;
-        const scale = mobile ? 48 / 40 : 80 / 64;
+        // Oversized start title, capped so its widest line still fits
+        // between the gutters (lines wrap at the smaller resting size).
+        const pad = parseFloat(getComputedStyle(head.parentElement).paddingLeft) || 16;
+        const prev = title.style.transform;
+        title.style.transform = 'none';
+        const range = document.createRange();
+        range.selectNodeContents(title);
+        const rects = [...range.getClientRects()];
+        title.style.transform = prev;
+        const lineW = rects.length
+          ? Math.max(...rects.map((r) => r.right)) - Math.min(...rects.map((r) => r.left))
+          : title.offsetWidth;
+        const scale = Math.max(1, Math.min(mobile ? 48 / 40 : 80 / 64, (W - 2 * pad) / lineW));
         m = {
           clip: `inset(${cardTop}px ${x}px ${H - cardTop - ch}px ${x}px round ${mobile ? 16 : 32}px)`,
           scale,
