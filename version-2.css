@@ -26,7 +26,11 @@
   --stage-h: calc(100vh - var(--nav-h));
   position: relative;
   background: var(--ink);
+  overflow-x: clip; /* the oversized start title must never widen the page */
 }
+/* iOS Safari still lets the page pan sideways with body { overflow-x: hidden };
+   clip blocks that without creating a scroll container. */
+html, body { overflow-x: clip; }
 @supports (height: 100svh) {
   .xhero { --stage-h: calc(100svh - var(--nav-h)); }
 }
